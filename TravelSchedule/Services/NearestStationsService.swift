@@ -11,7 +11,13 @@ import OpenAPIURLSession
 typealias NearestStations = Components.Schemas.NearestStationsResponse
 
 protocol NearestStationsServiceProtocol {
-    func getNearestStations(latitude: Double, longitude: Double, distance: Int) async throws -> NearestStations
+    func getNearestStations(
+        latitude: Double,
+        longitude: Double,
+        distance: Int,
+        format: String?,
+        lang: String?
+    ) async throws -> NearestStations
 }
 
 final class NearestStationsService: NearestStationsServiceProtocol {
@@ -22,16 +28,20 @@ final class NearestStationsService: NearestStationsServiceProtocol {
     }
     
     func getNearestStations(
-        latitude: Double,
-        longitude: Double,
-        distance: Int
-    ) async throws -> NearestStations {
-        let response = try await client.getNearestStations(query: .init(
-            lat: latitude,
-            lng: longitude,
-            distance: distance
-        ))
-        
-        return try response.ok.body.json
-    }
+            latitude: Double,
+            longitude: Double,
+            distance: Int,
+            format: String?,
+            lang: String?
+        ) async throws -> NearestStations {
+            let response = try await client.getNearestStations(query: .init(
+                lat: latitude,
+                lng: longitude,
+                distance: distance,
+                format: EnumMapper.makeEnum(from: format),
+                lang: EnumMapper.makeEnum(from: lang)
+            ))
+
+            return try response.ok.body.json
+        }
 }

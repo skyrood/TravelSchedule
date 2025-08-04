@@ -39,7 +39,7 @@ final class NearestSettlementService: NearestSettlementServiceProtocol {
             lng: longitude,
             distance: distance,
             lang: lang,
-            format: format
+            format: EnumMapper.makeEnum(from: format)
         ))
         
         return try response.ok.body.json

@@ -17,14 +17,14 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-//            testGetNearestStations()
             testGetServicesBetweenStations()
-//            testGetCopyrightInfo()
-//            testGetStationSchedule()
-//            testGetRouteStations()
-//            testGetNearestSettlement()
-//            testGetCarrierInfo()
-//            testGetAllstations()
+            testGetStationSchedule()
+            testGetRouteStations()
+            testGetNearestStations()
+            testGetNearestSettlement()
+            testGetCarrierInfo()
+            testGetAllstations()
+            testGetCopyrightInfo()
         }
     }
     
@@ -98,10 +98,7 @@ struct ContentView: View {
         Task {
             do {
                 let carrierInfo = try await API.shared.getCarrierInfo(
-                    code: "63438",
-                    system: nil,
-                    lang: nil,
-                    format: nil
+                    code: "63438"
                 )
                 print("Successfully fetched carrier info: \(carrierInfo)")
             } catch {
@@ -113,7 +110,7 @@ struct ContentView: View {
     func testGetAllstations() {
         Task {
             do {
-                let allStations = try await API.shared.getAllStations(lang: nil, format: nil)
+                let allStations = try await API.shared.getAllStations()
                 
                 print("Successfully fetched all stations.\nCountries count: \(String(describing: allStations.countries?.count ?? -1))\nFirst country name: \(String(describing: allStations.countries?[0].title ?? "кажется, не удалось ничего получить"))")
             } catch {

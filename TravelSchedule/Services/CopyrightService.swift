@@ -11,7 +11,9 @@ import OpenAPIURLSession
 typealias Copyright = Components.Schemas.CopyrightResponse
 
 protocol CopyrightServiceProtocol {
-    func getCopyrightInfo() async throws -> Copyright
+    func getCopyrightInfo(
+        format: String?
+    ) async throws -> Copyright
 }
 
 final class CopyrightService: CopyrightServiceProtocol {
@@ -21,8 +23,12 @@ final class CopyrightService: CopyrightServiceProtocol {
         self.client = client
     }
     
-    func getCopyrightInfo() async throws -> Copyright {
-        let response = try await client.copyright(query: .init())
+    func getCopyrightInfo(
+        format: String?
+    ) async throws -> Copyright {
+        let response = try await client.copyright(query: .init(
+            format: EnumMapper.makeEnum(from: format)
+        ))
         
         return try response.ok.body.json
     }

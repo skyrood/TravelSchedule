@@ -44,14 +44,62 @@ final class API {
 }
 
 extension API {
-    func getServicesBetweenStations(from: String, to: String) async throws -> ServicesBetweenStations {
+    func getServicesBetweenStations(
+        from: String,
+        to: String,
+        format: String? = nil,
+        lang: String? = nil,
+        date: String? = nil,
+        transportTypes: String? = nil,
+        system: String? = nil,
+        showSystems: String? = nil,
+        offset: Int? = nil,
+        limit: Int? = nil,
+        addDaysMask: Bool? = nil,
+        resultTimeZone: String? = nil,
+        transfers: Bool? = nil
+    ) async throws -> ServicesBetweenStations {
         let service = SearchService(client: client)
-        return try await service.getServicesBetweenStations(fromStation: from, toStation: to)
+        return try await service.getServicesBetweenStations(
+            fromStation: from,
+            toStation: to,
+            format: format,
+            lang: lang,
+            date: date,
+            transportTypes: transportTypes,
+            system: system,
+            showSystems: showSystems,
+            offset: offset,
+            limit: limit,
+            addDaysMask: addDaysMask,
+            resultTimeZone: resultTimeZone,
+            transfers: transfers
+        )
     }
     
-    func getStationSchedule(station: String) async throws -> Schedule {
+    func getStationSchedule(
+        station: String,
+        lang: String? = nil,
+        format: String? = nil,
+        date: String? = nil,
+        transportTypes: String? = nil,
+        event: String? = nil,
+        direction: String? = nil,
+        system: String? = nil,
+        resultTimezone: String? = nil
+    ) async throws -> Schedule {
         let service = ScheduleService(client: client)
-        return try await service.getStationSchedule(station: station)
+        return try await service.getStationSchedule(
+            station: station,
+            lang: lang,
+            format: format,
+            date: date,
+            transportTypes: transportTypes,
+            event: event,
+            direction: direction,
+            system: system,
+            resultTimezone: resultTimezone
+        )
     }
     
     func getRouteStations(uid: String) async throws -> ThreadStations {
@@ -59,17 +107,29 @@ extension API {
         return try await service.getRouteStations(uid: uid)
     }
     
-    func getNearestStations(latitude: Double, longitude: Double, distance: Int) async throws -> NearestStations {
+    func getNearestStations(
+        latitude: Double,
+        longitude: Double,
+        distance: Int,
+        format: String? = nil,
+        lang: String? = nil
+    ) async throws -> NearestStations {
         let service = NearestStationsService(client: client)
-        return try await service.getNearestStations(latitude: latitude, longitude: longitude, distance: distance)
+        return try await service.getNearestStations(
+            latitude: latitude,
+            longitude: longitude,
+            distance: distance,
+            format: format,
+            lang: lang
+        )
     }
     
     func getNearestSettlement(
         latitude: Double,
         longitude: Double,
         distance: Int,
-        lang: String?,
-        format: String?
+        lang: String? = nil,
+        format: String? = nil
     ) async throws -> NearestSettlement {
         let service = NearestSettlementService(client: client)
         return try await service.getNearestSettlement(
@@ -83,9 +143,9 @@ extension API {
     
     func getCarrierInfo(
         code: String,
-        system: String?,
-        lang: String?,
-        format: String?
+        system: String? = nil,
+        lang: String? = nil,
+        format: String? = nil
     ) async throws -> CarrierInfo {
         let service = CarrierService(client: client)
         return try await service.getCarrierInfo(
@@ -97,8 +157,8 @@ extension API {
     }
     
     func getAllStations(
-        lang: String?,
-        format: String?
+        lang: String? = nil,
+        format: String? = nil
     ) async throws -> StationList {
         let service = StationsService(client: client)
         return try await service.getAllStations(
@@ -107,9 +167,9 @@ extension API {
         )
     }
     
-    func getCopyrightInfo() async throws -> Copyright {
+    func getCopyrightInfo(format: String? = nil) async throws -> Copyright {
         let service = CopyrightService(client: client)
-        return try await service.getCopyrightInfo()
+        return try await service.getCopyrightInfo(format: format)
     }
 }
 

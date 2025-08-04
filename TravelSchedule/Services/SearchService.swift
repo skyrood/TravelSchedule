@@ -11,7 +11,21 @@ import OpenAPIURLSession
 typealias ServicesBetweenStations = Components.Schemas.ServicesBetweenStations
 
 protocol SearchProtocol {
-    func getServicesBetweenStations(fromStation: String, toStation: String) async throws -> ServicesBetweenStations
+    func getServicesBetweenStations(
+        fromStation: String,
+        toStation: String,
+        format: String?,
+        lang: String?,
+        date: String?,
+        transportTypes: String?,
+        system: String?,
+        showSystems: String?,
+        offset: Int?,
+        limit: Int?,
+        addDaysMask: Bool?,
+        resultTimeZone: String?,
+        transfers: Bool?
+    ) async throws -> ServicesBetweenStations
 }
 
 final class SearchService: SearchProtocol {
@@ -23,11 +37,33 @@ final class SearchService: SearchProtocol {
     
     func getServicesBetweenStations(
         fromStation: String,
-        toStation: String
+        toStation: String,
+        format: String?,
+        lang: String?,
+        date: String?,
+        transportTypes: String?,
+        system: String?,
+        showSystems: String?,
+        offset: Int?,
+        limit: Int?,
+        addDaysMask: Bool?,
+        resultTimeZone: String?,
+        transfers: Bool?
     ) async throws -> ServicesBetweenStations {
         let response = try await client.search(query: .init(
             from: fromStation,
-            to: toStation
+            to: toStation,
+            format: EnumMapper.makeEnum(from: format),
+            lang: EnumMapper.makeEnum(from: lang),
+            date: date,
+            transport_types: EnumMapper.makeEnum(from: transportTypes),
+            system: EnumMapper.makeEnum(from: system),
+            show_systems: EnumMapper.makeEnum(from: showSystems),
+            offset: offset,
+            limit: limit,
+            add_days_mask: addDaysMask,
+            result_timezone: resultTimeZone,
+            transfers: transfers
         ))
         
         return try response.ok.body.json

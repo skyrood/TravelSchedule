@@ -17,12 +17,6 @@ paths:
       summary: Расписание рейсов между станциями
       operationId: search
       parameters:
-#      - name: apikey
-#        in: query
-#        description: Ключ доступа к API
-#        required: true
-#        schema:
-#          type: string
       - name: from
         in: query
         description: Код станции отправления
@@ -130,12 +124,6 @@ paths:
       summary: Список рейсов по станции
       operationId: getStationSchedule
       parameters:
-#        - name: apikey
-#          in: query
-#          description: API key
-#          required: true
-#          schema:
-#            type: string
         - name: station
           in: query
           description: Код станции
@@ -148,12 +136,14 @@ paths:
           required: false
           schema:
             type: string
+            enum: [RU, UA]
         - name: format
           in: query
           description: Формат ответа (json по умолчанию)
           required: false
           schema:
             type: string
+            enum: [json, xml]
         - name: date
           in: query
           description: Дата, на которую требуется расписание (формат YYYY-MM-DD)
@@ -166,12 +156,20 @@ paths:
           required: false
           schema:
             type: string
+            enum:
+              - plane
+              - train
+              - suburban
+              - bus
+              - water
+              - helicopter
         - name: event
           in: query
           description: Событие для фильтрации (arrival/отправление)
           required: false
           schema:
             type: string
+            enum: [departure, arrival]
         - name: direction
           in: query
           description: Направление (например, на Москву)
@@ -207,12 +205,6 @@ paths:
       summary: Список станций следования
       operationId: getRouteStations
       parameters:
-#        - name: apikey
-#          in: query
-#          description: API key
-#          required: true
-#          schema:
-#            type: string
         - name: uid
           in: query
           description: Идентификатор нитки
@@ -237,12 +229,14 @@ paths:
           required: false
           schema:
             type: string
+            enum: [json, xml]
         - name: lang
           in: query
           description: Язык возвращаемой информации (например, ru_RU)
           required: false
           schema:
             type: string
+            enum: [RU, UA]
         - name: date
           in: query
           description: Дата, на которую необходимо получить список станций (формат YYYY-MM-DD)
@@ -255,6 +249,7 @@ paths:
           required: false
           schema:
             type: string
+            enum: [yandex, esr]
       responses:
         "200":
           description: Успешный ответ
@@ -272,12 +267,6 @@ paths:
       summary: Список ближайших станций
       operationId: getNearestStations
       parameters:
-#      - name: apikey
-#        in: query
-#        description: API key
-#        required: true
-#        schema:
-#          type: string
       - name: lat
         in: query
         description: широта
@@ -302,12 +291,14 @@ paths:
         required: false
         schema:
           type: string
+          enum: [xml, json]
       - name: lang
         in: query
         description: RU or UA
         required: false
         schema:
           type: string
+          enum: [RU, UA]
       responses:
         "200":
           description: success
@@ -325,12 +316,6 @@ paths:
       summary: Ближайший город
       operationId: getNearestSettlement
       parameters:
-#        - name: apikey
-#          in: query
-#          description: API key
-#          required: true
-#          schema:
-#            type: string
         - name: lat
           in: query
           description: Широта согласно WGS84
@@ -361,6 +346,7 @@ paths:
           required: false
           schema:
             type: string
+            enum: [json, xml]
       responses:
         "200":
           description: Успешный ответ
@@ -378,12 +364,6 @@ paths:
       summary: Информация о перевозчике
       operationId: getCarrierInfo
       parameters:
-#        - name: apikey
-#          in: query
-#          description: API key
-#          required: true
-#          schema:
-#            type: string
         - name: code
           in: query
           description: Код перевозчика
@@ -425,12 +405,6 @@ paths:
       summary: Список всех доступных станций
       operationId: getAllStations
       parameters:
-#        - name: apikey
-#          in: query
-#          description: API key
-#          required: true
-#          schema:
-#            type: string
         - name: lang
           in: query
           description: Язык возвращаемой информации (например, ru_RU)
@@ -460,18 +434,13 @@ paths:
       summary: Копирайт Яндекс Расписаний
       operationId: copyright
       parameters:
-#      - name: apikey
-#        in: query
-#        description: API key
-#        required: true
-#        schema:
-#          type: string
       - name: format
         in: query
         description: json or xml
         required: false
         schema:
           type: string
+          enum: [xml, json]
       responses:
         "200":
           description: success
