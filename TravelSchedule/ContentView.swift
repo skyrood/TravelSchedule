@@ -17,14 +17,14 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-            testGetNearestStations()
-            testGetServicesBetweenStations()
-            testGetCopyrightInfo()
-            testGetStationSchedule()
-            testGetRouteStations()
+//            testGetNearestStations()
+//            testGetServicesBetweenStations()
+//            testGetCopyrightInfo()
+//            testGetStationSchedule()
+//            testGetRouteStations()
             testGetNearestSettlement()
-            testGetCarrierInfo()
-            testGetAllstations()
+//            testGetCarrierInfo()
+//            testGetAllstations()
         }
     }
     
@@ -59,7 +59,7 @@ struct ContentView: View {
         Task {
             do {
                 let routeStations = try await API.shared.getRouteStations(uid: "FV-5553_250809_c8565_12")
-                print("Successfully fetched reoute stations: \(routeStations)")
+                print("Successfully fetched route stations: \(routeStations)")
             } catch {
                 print("Error: \(error)")
             }
