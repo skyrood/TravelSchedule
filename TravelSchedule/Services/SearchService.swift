@@ -16,12 +16,9 @@ protocol SearchProtocol {
 
 final class SearchService: SearchProtocol {
     private let client: Client
-    
-    private let apiKey: String
-    
-    init(client: Client, apiKey: String) {
+        
+    init(client: Client) {
         self.client = client
-        self.apiKey = apiKey
     }
     
     func getServicesBetweenStations(
@@ -29,7 +26,6 @@ final class SearchService: SearchProtocol {
         toStation: String
     ) async throws -> ServicesBetweenStations {
         let response = try await client.search(query: .init(
-            apikey: apiKey,
             from: fromStation,
             to: toStation
         ))

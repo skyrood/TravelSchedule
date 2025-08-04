@@ -16,12 +16,9 @@ protocol NearestStationsServiceProtocol {
 
 final class NearestStationsService: NearestStationsServiceProtocol {
     private let client: Client
-    
-    private let apiKey: String
-    
-    init(client: Client, apiKey: String) {
+        
+    init(client: Client) {
         self.client = client
-        self.apiKey = apiKey
     }
     
     func getNearestStations(
@@ -30,7 +27,6 @@ final class NearestStationsService: NearestStationsServiceProtocol {
         distance: Int
     ) async throws -> NearestStations {
         let response = try await client.getNearestStations(query: .init(
-            apikey: apiKey,
             lat: latitude,
             lng: longitude,
             distance: distance

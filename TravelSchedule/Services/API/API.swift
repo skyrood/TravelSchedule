@@ -6,6 +6,25 @@
 //
 
 import OpenAPIURLSession
+import OpenAPIRuntime
+import Foundation
+import HTTPTypes
+
+struct AuthenticationClientMiddleware: ClientMiddleware {
+    let token: String
+    
+    func intercept(
+        _ request: HTTPRequest,
+        body: HTTPBody?,
+        baseURL: URL,
+        operationID: String,
+        next: @Sendable (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
+    ) async throws -> (HTTPResponse, HTTPBody?) {
+        var newRequest = request
+        newRequest.headerFields[.authorization] = "\(token)"
+        return try await next(newRequest, body, baseURL)
+    }
+}
 
 final class API {
     static let shared = API()
@@ -16,29 +35,32 @@ final class API {
     private init() {
         self.client = Client(
             serverURL: try! Servers.Server1.url(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [
+                AuthenticationClientMiddleware(token: apiKey)
+            ]
         )
     }
 }
 
 extension API {
     func getServicesBetweenStations(from: String, to: String) async throws -> ServicesBetweenStations {
-        let service = SearchService(client: client, apiKey: apiKey)
+        let service = SearchService(client: client)
         return try await service.getServicesBetweenStations(fromStation: from, toStation: to)
     }
     
     func getStationSchedule(station: String) async throws -> Schedule {
-        let service = ScheduleService(client: client, apiKey: apiKey)
+        let service = ScheduleService(client: client)
         return try await service.getStationSchedule(station: station)
     }
     
     func getRouteStations(uid: String) async throws -> ThreadStations {
-        let service = ThreadStationsService(client: client, apiKey: apiKey)
+        let service = ThreadStationsService(client: client)
         return try await service.getRouteStations(uid: uid)
     }
     
     func getNearestStations(latitude: Double, longitude: Double, distance: Int) async throws -> NearestStations {
-        let service = NearestStationsService(client: client, apiKey: apiKey)
+        let service = NearestStationsService(client: client)
         return try await service.getNearestStations(latitude: latitude, longitude: longitude, distance: distance)
     }
     
@@ -49,7 +71,7 @@ extension API {
         lang: String?,
         format: String?
     ) async throws -> NearestSettlement {
-        let service = NearestSettlementService(client: client, apiKey: apiKey)
+        let service = NearestSettlementService(client: client)
         return try await service.getNearestSettlement(
             latitude: latitude,
             longitude: longitude,
@@ -65,7 +87,7 @@ extension API {
         lang: String?,
         format: String?
     ) async throws -> CarrierInfo {
-        let service = CarrierService(client: client, apiKey: apiKey)
+        let service = CarrierService(client: client)
         return try await service.getCarrierInfo(
             code: code,
             system: system,
@@ -78,7 +100,7 @@ extension API {
         lang: String?,
         format: String?
     ) async throws -> StationList {
-        let service = StationsService(client: client, apiKey: apiKey)
+        let service = StationsService(client: client)
         return try await service.getAllStations(
             lang: lang,
             format: format
@@ -86,7 +108,7 @@ extension API {
     }
     
     func getCopyrightInfo() async throws -> Copyright {
-        let service = CopyrightService(client: client, apiKey: apiKey)
+        let service = CopyrightService(client: client)
         return try await service.getCopyrightInfo()
     }
 }

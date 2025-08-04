@@ -18,11 +18,11 @@ struct ContentView: View {
         .padding()
         .onAppear {
 //            testGetNearestStations()
-//            testGetServicesBetweenStations()
+            testGetServicesBetweenStations()
 //            testGetCopyrightInfo()
 //            testGetStationSchedule()
 //            testGetRouteStations()
-            testGetNearestSettlement()
+//            testGetNearestSettlement()
 //            testGetCarrierInfo()
 //            testGetAllstations()
         }

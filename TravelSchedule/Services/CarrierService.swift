@@ -21,12 +21,9 @@ protocol CarrierServiceProtocol {
 
 final class CarrierService: CarrierServiceProtocol {
     private let client: Client
-    
-    private let apiKey: String
-    
-    init(client: Client, apiKey: String) {
+        
+    init(client: Client) {
         self.client = client
-        self.apiKey = apiKey
     }
     
     func getCarrierInfo(
@@ -36,7 +33,6 @@ final class CarrierService: CarrierServiceProtocol {
         format: String?
     ) async throws -> CarrierInfo {
         let response = try await client.getCarrierInfo(query: .init(
-            apikey: apiKey,
             code: code,
             system: system,
             lang: lang,

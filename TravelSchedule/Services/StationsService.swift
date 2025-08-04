@@ -20,12 +20,9 @@ protocol StationsServiceProtocol {
 
 final class StationsService: StationsServiceProtocol {
     private let client: Client
-    
-    private let apiKey: String
-    
-    init(client: Client, apiKey: String) {
+        
+    init(client: Client) {
         self.client = client
-        self.apiKey = apiKey
     }
     
     func getAllStations(
@@ -33,7 +30,6 @@ final class StationsService: StationsServiceProtocol {
         format: String?
     ) async throws -> StationList {
         let response = try await client.getAllStations(query: .init(
-            apikey: apiKey,
             lang: lang,
             format: format
         ))

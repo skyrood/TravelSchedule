@@ -17,12 +17,12 @@ paths:
       summary: Расписание рейсов между станциями
       operationId: search
       parameters:
-      - name: apikey
-        in: query
-        description: Ключ доступа к API
-        required: true
-        schema:
-          type: string
+#      - name: apikey
+#        in: query
+#        description: Ключ доступа к API
+#        required: true
+#        schema:
+#          type: string
       - name: from
         in: query
         description: Код станции отправления
@@ -130,12 +130,12 @@ paths:
       summary: Список рейсов по станции
       operationId: getStationSchedule
       parameters:
-        - name: apikey
-          in: query
-          description: API key
-          required: true
-          schema:
-            type: string
+#        - name: apikey
+#          in: query
+#          description: API key
+#          required: true
+#          schema:
+#            type: string
         - name: station
           in: query
           description: Код станции
@@ -207,12 +207,12 @@ paths:
       summary: Список станций следования
       operationId: getRouteStations
       parameters:
-        - name: apikey
-          in: query
-          description: API key
-          required: true
-          schema:
-            type: string
+#        - name: apikey
+#          in: query
+#          description: API key
+#          required: true
+#          schema:
+#            type: string
         - name: uid
           in: query
           description: Идентификатор нитки
@@ -272,12 +272,12 @@ paths:
       summary: Список ближайших станций
       operationId: getNearestStations
       parameters:
-      - name: apikey
-        in: query
-        description: API key
-        required: true
-        schema:
-          type: string
+#      - name: apikey
+#        in: query
+#        description: API key
+#        required: true
+#        schema:
+#          type: string
       - name: lat
         in: query
         description: широта
@@ -325,12 +325,12 @@ paths:
       summary: Ближайший город
       operationId: getNearestSettlement
       parameters:
-        - name: apikey
-          in: query
-          description: API key
-          required: true
-          schema:
-            type: string
+#        - name: apikey
+#          in: query
+#          description: API key
+#          required: true
+#          schema:
+#            type: string
         - name: lat
           in: query
           description: Широта согласно WGS84
@@ -378,12 +378,12 @@ paths:
       summary: Информация о перевозчике
       operationId: getCarrierInfo
       parameters:
-        - name: apikey
-          in: query
-          description: API key
-          required: true
-          schema:
-            type: string
+#        - name: apikey
+#          in: query
+#          description: API key
+#          required: true
+#          schema:
+#            type: string
         - name: code
           in: query
           description: Код перевозчика
@@ -425,12 +425,12 @@ paths:
       summary: Список всех доступных станций
       operationId: getAllStations
       parameters:
-        - name: apikey
-          in: query
-          description: API key
-          required: true
-          schema:
-            type: string
+#        - name: apikey
+#          in: query
+#          description: API key
+#          required: true
+#          schema:
+#            type: string
         - name: lang
           in: query
           description: Язык возвращаемой информации (например, ru_RU)
@@ -460,12 +460,12 @@ paths:
       summary: Копирайт Яндекс Расписаний
       operationId: copyright
       parameters:
-      - name: apikey
-        in: query
-        description: API key
-        required: true
-        schema:
-          type: string
+#      - name: apikey
+#        in: query
+#        description: API key
+#        required: true
+#        schema:
+#          type: string
       - name: format
         in: query
         description: json or xml
@@ -1225,3 +1225,11 @@ components:
       properties:
         yandex_code:
           type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+
+security:
+  - ApiKeyAuth: []
