@@ -89,5 +89,5 @@ struct MainScreenView: View {
 }
 
 #Preview {
-    MainScreen()
+    MainScreenView()
 }
