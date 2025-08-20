@@ -55,6 +55,7 @@ struct StationSelectionView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
+                        .tint(.ypBlack)
                 }
             }
         }

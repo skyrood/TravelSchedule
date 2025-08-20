@@ -54,6 +54,7 @@ struct SettlementSelectionView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
+                        .tint(.ypBlack)
                 }
             }
         }

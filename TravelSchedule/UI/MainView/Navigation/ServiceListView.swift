@@ -32,6 +32,7 @@ struct ServiceListView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
+                        .tint(.ypBlack)
                 }
             }
         }
