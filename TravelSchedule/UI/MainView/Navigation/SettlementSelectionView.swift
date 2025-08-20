@@ -7,38 +7,70 @@
 
 import SwiftUI
 
-enum SelectionKind: Hashable { case from, to }
-
 struct SettlementSelectionView: View {
-    let kind: SelectionKind
-    let initial: String
-    
-    let onSelect: (String) -> Void
-    
+    @Environment(Router.self) private var router
+    @Environment(TripBuilder.self) private var builder
+    @Environment(SettlementViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
+    
     @State private var query: String = ""
 
-    init(kind: SelectionKind, initial: String, onSelect: @escaping (String) -> Void) {
+    let kind: SelectionKind
+
+    init(kind: SelectionKind) {
         self.kind = kind
-        self.initial = initial
-        self.onSelect = onSelect
-        _query = State(initialValue: initial)
+    }
+    
+    private var filteredSettlements: [Settlement] {
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !q.isEmpty else { return viewModel.settlements }
+        return viewModel.settlements.filter { s in
+            s.name.localizedCaseInsensitiveContains(q)
+        }
     }
     
     var body: some View {
         List {
-            Button("Tokyo")  { select("Tokyo") }
-            Button("Osaka")  { select("Osaka") }
+            ForEach(filteredSettlements) { settlement in
+                Button {
+                    print("selected \(settlement.name)")
+                    builder.setSettlement(settlement: settlement, for: kind)
+                    router.go(to: .station(settlement: settlement, kind: kind))
+                } label: {
+                    SettlementListRow(settlement: settlement)
+                }
+                .buttonStyle(.plain)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+            }
         }
-        .navigationTitle(kind == .from ? "Выбор пункта отправления" : "Выбор пункта назначения")
+        .listStyle(.inset)
+        .navigationTitle("Выбор города")
+        .navigationBarBackButtonHidden(true)
+        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+            }
+        }
+        .padding(.leading, 16)
+        .padding(.trailing, 18)
     }
     
     private func select(_ value: String) {
-        onSelect(value)
-        dismiss()
+        print("selected: \(value)")
     }
 }
 
 #Preview {
-    SettlementSelectionView(kind: .from, initial: "", onSelect: { _ in })
+    SettlementSelectionView(
+        kind: .from
+    )
+    .environment(Router())
+    .environment(TripBuilder())
+    .environment(SettlementViewModel())
 }
