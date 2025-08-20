@@ -7,117 +7,138 @@
 
 import SwiftUI
 
-enum Route: Hashable {
-    case settlement(kind: SelectionKind)
-}
-
 struct MainScreenView: View {
-    @State private var path = NavigationPath()
+    //    @State private var path = NavigationPath()
+    //
+    //    @State private var builder = TripBuilder()
+    //    @State private var settlementViewModel = SettlementViewModel()
+    @Environment(Router.self) private var router
+    @Environment(TripBuilder.self) private var builder
     
-    @State private var fromSettlement: String?
-    @State private var toSettlement: String?
+    private var fromIsFilled: Bool {
+        builder.from.settlement != nil && builder.from.station != nil
+    }
+    
+    private var toIsFilled: Bool {
+        builder.to.settlement != nil && builder.to.station != nil
+    }
+    
+    private var fromTitle: String {
+        if let settlement = builder.from.settlement,
+           let station = builder.from.station {
+            return "\(settlement.name) (\(station.name))"
+        } else {
+            return "Откуда"
+        }
+    }
+    
+    private var toTitle: String {
+        if let settlement = builder.to.settlement,
+           let station = builder.to.station {
+            return "\(settlement.name) (\(station.name))"
+        } else {
+            return "Куда"
+        }
+    }
     
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        Color.clear.frame(width: 4)
-                        
-                        ForEach(0..<7) { index in
-                            StoryExampleView()
-                        }
-                        
-                        Color.clear.frame(width: 4)
-                    }
-                }
-                .padding(.vertical, 24)
-                .fixedSize(horizontal: false, vertical: true)
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.ypBlue)
-                        .frame(height: 128)
-                        .frame(maxWidth: .infinity)
+        VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    Color.clear.frame(width: 4)
                     
-                    HStack(spacing: 16) {
-                        VStack(spacing: 0) {
-                            Button {
-                                path.append(Route.settlement(kind: .from))
-                            } label: {
-                                Text(fromSettlement ?? "Откуда")
-                                    .foregroundColor(.ypGray)
-                                    .font(.regular17)
-                                    .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                                    .padding(.leading, 16)
-                                    .contentShape(Rectangle())
-                            }
-                            
-                            Button {
-                                path.append(Route.settlement(kind: .to))
-                            } label: {
-                                Text(toSettlement ?? "Куда")
-                                    .foregroundColor(.ypGray)
-                                    .font(.regular17)
-                                    .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                                    .padding(.leading, 16)
-                                    .contentShape(Rectangle())
-                            }
+                    ForEach(0..<7) { index in
+                        StoryExampleView()
+                    }
+                    
+                    Color.clear.frame(width: 4)
+                }
+            }
+            .padding(.vertical, 24)
+            .fixedSize(horizontal: false, vertical: true)
+            
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.ypBlue)
+                    .frame(height: 128)
+                    .frame(maxWidth: .infinity)
+                
+                HStack(spacing: 16) {
+                    VStack(spacing: 0) {
+                        Button {
+                            router.go(to: .settlement(kind: .from))
+                        } label: {
+                            Text(fromTitle)
+                                .foregroundColor(fromIsFilled ? .ypBlackUniv : .ypGray)
+                                .font(.regular17)
+                                .lineLimit(1)
+                                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+                                .padding(.horizontal, 16)
+                                .contentShape(Rectangle())
                         }
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.ypWhiteUniv)
-                        )
                         
                         Button {
-                            let temp = fromSettlement
-                            fromSettlement = toSettlement
-                            toSettlement = temp
+                            router.go(to: .settlement(kind: .to))
                         } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 18)
-                                    .fill(.ypWhiteUniv)
-                                    .frame(width: 36, height: 36)
-                                
-                                Image(systemName: "arrow.2.squarepath")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 16)
-                                    .foregroundColor(.ypBlue)
-                            }
+                            Text(toTitle)
+                                .foregroundColor(toIsFilled ? .ypBlackUniv : .ypGray)
+                                .font(.regular17)
+                                .lineLimit(1)
+                                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+                                .padding(.horizontal, 16)
+                                .contentShape(Rectangle())
                         }
-                        .padding(.trailing, 16)
                     }
-                    .padding(.leading, 16)
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 20)
-                
-                Spacer()
-            }
-            .background(.ypWhite)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .settlement(let kind):
-                    SettlementSelectionView(
-                        kind: kind,
-                        initial: kind == .from ? (fromSettlement ?? "") : (toSettlement ?? "")
-                    ) { selected in
-                        switch kind {
-                        case .from: fromSettlement = selected
-                        case .to:   toSettlement   = selected
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(.ypWhiteUniv)
+                    )
+                    
+                    Button {
+                        let temp = builder.from
+                        builder.from = builder.to
+                        builder.to = temp
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(.ypWhiteUniv)
+                                .frame(width: 36, height: 36)
+                            
+                            Image(systemName: "arrow.2.squarepath")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 16)
+                                .foregroundColor(.ypBlue)
                         }
-                        path.removeLast()
                     }
-                default:
-                    fatalError("Unsupported destination ID: \(route)")
+                    .padding(.trailing, 16)
                 }
+                .padding(.leading, 16)
             }
+            .padding(.horizontal, 16)
+            .padding(.top, 20)
+            
+            if builder.isReady {
+                Button {
+                    print("searching...")
+                } label: {
+                    Text("Найти")
+                        .font(.bold17)
+                }
+                .frame(width: 150, height: 60)
+                .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
+                .padding(.top, 16)
+            }
+            
+            Spacer()
         }
+        .background(.ypWhite)
     }
 }
 
 #Preview {
     MainScreenView()
+        .environment(Router())
+        .environment(TripBuilder())
 }
