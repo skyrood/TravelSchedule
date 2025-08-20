@@ -33,6 +33,8 @@ struct TravelScheduleApp: App {
             SettlementSelectionView(kind: kind)
         case .station(let settlement, let kind):
             StationSelectionView(settlement: settlement, kind: kind)
+        case .serviceList:
+            ServiceListView()
         }
     }
 }

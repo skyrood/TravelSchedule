@@ -122,6 +122,7 @@ struct MainScreenView: View {
             if builder.isReady {
                 Button {
                     print("searching...")
+                    router.go(to: .serviceList)
                 } label: {
                     Text("Найти")
                         .font(.bold17)

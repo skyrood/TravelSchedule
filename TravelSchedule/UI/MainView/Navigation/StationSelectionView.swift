@@ -46,7 +46,7 @@ struct StationSelectionView: View {
             }
         }
         .listStyle(.inset)
-        .navigationTitle("Выбор города")
+        .navigationTitle("Выбор станции")
         .navigationBarBackButtonHidden(true)
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
         .toolbar {
