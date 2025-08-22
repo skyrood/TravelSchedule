@@ -35,7 +35,12 @@ struct ServiceListView: View {
                             .font(.bold24)
                     } else {
                         ForEach(filteredServices) { service in
-                            ServiceListRow(service: service)
+                            Button {
+                                router.go(to: .carrierInfo)
+                            } label: {
+                                ServiceListRow(service: service)
+
+                            }
                         }
                     }
                 }

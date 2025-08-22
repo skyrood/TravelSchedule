@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CarrierInfoView: View {
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         ZStack {
             Color.ypWhite.ignoresSafeArea()
@@ -17,6 +19,19 @@ struct CarrierInfoView: View {
                 Spacer()
             }
         }
+        .background(.ypWhite)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.ypBlack)
+                }
+            }
+        }
+        .toolbarBackground(.ypWhite, for: .navigationBar)
     }
 }
 
