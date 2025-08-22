@@ -11,9 +11,14 @@ struct SettingsView: View {
     var body: some View {
         ZStack {
             Color.ypWhite.ignoresSafeArea()
-            Text("Настройки")
-                .font(.largeTitle)
-                .foregroundColor(.white)
+            
+            VStack {
+                Spacer()
+                Text("Настройки")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                Spacer()
+            }
         }
         .tabItem {
             Image(.settingsTabIcon)
