@@ -126,8 +126,10 @@ struct MainScreenView: View {
                 } label: {
                     Text("Найти")
                         .font(.bold17)
+                        .frame(width: 150, height: 60)
+                        .contentShape(Rectangle())
                 }
-                .frame(width: 150, height: 60)
+//                .listRowInsets(EdgeInsets())
                 .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
                 .padding(.top, 16)
             }
