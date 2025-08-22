@@ -21,11 +21,15 @@ struct PlaceSelection: Equatable {
     func setSettlement(settlement: Settlement, for kind: SelectionKind) {
         switch kind {
         case .from:
-            from.settlement = settlement
-            from.station = nil
+            if from.settlement?.id != settlement.id {
+                from.settlement = settlement
+                from.station = nil
+            }
         case .to:
-            to.settlement = settlement
-            to.station = nil
+            if to.settlement?.id != settlement.id {
+                to.settlement = settlement
+                to.station = nil
+            }
         }
     }
     
@@ -59,3 +63,4 @@ struct PlaceSelection: Equatable {
         return "\(fromSettlement.name) (\(fromStation.name)) → \(toSettlement.name) (\(toStation.name))"
     }
 }
+
