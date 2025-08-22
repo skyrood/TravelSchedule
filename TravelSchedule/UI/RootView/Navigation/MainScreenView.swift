@@ -135,6 +135,7 @@ struct MainScreenView: View {
                 } label: {
                     Text("Найти")
                         .font(.bold17)
+                        .foregroundColor(.ypWhiteUniv)
                         .frame(width: 150, height: 60)
                         .contentShape(Rectangle())
                 }
