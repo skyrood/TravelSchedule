@@ -31,13 +31,14 @@ struct SettlementSelectionView: View {
     
     var body: some View {
         if filteredSettlements.isEmpty {
+            Spacer()
             Text("Город не найден")
                 .font(.bold24)
+            Spacer()
         } else {
             List {
                 ForEach(filteredSettlements) { settlement in
                     Button {
-                        print("selected \(settlement.name)")
                         builder.setSettlement(settlement: settlement, for: kind)
                         router.go(to: .station(settlement: settlement, kind: kind))
                     } label: {

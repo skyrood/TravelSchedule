@@ -32,7 +32,9 @@ struct StationSelectionView: View {
     
     var body: some View {
         if filteredStations.isEmpty {
+            Spacer()
             Text("Станция не найдена")
+            Spacer()
         } else {
             List {
                 ForEach(filteredStations) { station in
