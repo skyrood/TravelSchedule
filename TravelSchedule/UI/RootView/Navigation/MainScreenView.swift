@@ -47,7 +47,6 @@ struct MainScreenView: View {
                 content
             }
         }
-//        .padding(.bottom, 16)
         .background(.ypWhite)
     }
     

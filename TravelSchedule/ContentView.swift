@@ -17,14 +17,14 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-            testGetServicesBetweenStations()
-            testGetStationSchedule()
-            testGetRouteStations()
-            testGetNearestStations()
-            testGetNearestSettlement()
-            testGetCarrierInfo()
-            testGetAllstations()
-            testGetCopyrightInfo()
+//            testGetServicesBetweenStations()
+//            testGetStationSchedule()
+//            testGetRouteStations()
+//            testGetNearestStations()
+//            testGetNearestSettlement()
+//            testGetCarrierInfo()
+//            testGetAllstations()
+//            testGetCopyrightInfo()
         }
     }
     
