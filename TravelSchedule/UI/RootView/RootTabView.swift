@@ -8,39 +8,56 @@
 import SwiftUI
 
 struct RootTabView: View {
+    @State private var router = Router()
+    
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .ypWhite
-
+        
         appearance.shadowColor = .ypGray
-
+        
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some View {
-        TabView {
-            ZStack {
+        TabView(selection: $router.selectedTab) {
+            
+            NavigationStack(path: router.pathBinding(for: .schedule)) {
                 MainScreenView()
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .settlement(let kind):
+                            SettlementSelectionView(kind: kind)
+                        case .station(let s, let kind):
+                            StationSelectionView(settlement: s, kind: kind)
+                        case .serviceList:
+                            ServiceListView()
+                        case .filters:
+                            ServiceFiltersView()
+                        case .carrierInfo:
+                            CarrierInfoView()
+                        }
+                    }
             }
-            .tabItem {
-                Image(.scheduleTabIcon)
-                    .renderingMode(.template)
+            .tabItem { Image(.scheduleTabIcon).renderingMode(.template) }
+            .tag(AppTabRoute.schedule)
+            
+            NavigationStack(path: router.pathBinding(for: .settings)) {
+                SettingsView()
+                    .navigationDestination(for: SettingsRoute.self) { route in
+                        switch route {
+                        case .connectionError: ConnectionErrorView()
+                        case .serverError: ServerErrorView()
+                        }
+                    }
             }
-
-            ZStack {
-                Color.ypBlue.edgesIgnoringSafeArea(.top)
-                Text("Синяя вкладка")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-            }
-            .tabItem {
-                Image(.settingsTabIcon)
-                    .renderingMode(.template)
-            }
+            .tabItem { Image(.settingsTabIcon).renderingMode(.template) }
+            .tag(AppTabRoute.settings)
         }
         .tint(.ypBlack)
+        .environment(router)
     }
 }
 

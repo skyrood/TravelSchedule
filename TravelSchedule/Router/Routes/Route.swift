@@ -12,4 +12,5 @@ enum Route: Hashable {
     case station(settlement: Settlement, kind: SelectionKind)
     case serviceList
     case filters
+    case carrierInfo
 }
