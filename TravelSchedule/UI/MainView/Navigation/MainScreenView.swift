@@ -152,6 +152,7 @@ struct MainScreenView: View {
 
 #Preview {
     MainScreenView()
+        .environmentObject(OrientationObserver())
         .environment(Router())
         .environment(TripBuilder())
 }

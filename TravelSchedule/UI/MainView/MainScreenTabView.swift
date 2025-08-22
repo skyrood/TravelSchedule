@@ -46,4 +46,7 @@ struct MainScreenTabView: View {
 
 #Preview {
     MainScreenTabView()
+        .environmentObject(OrientationObserver())
+        .environment(Router())
+        .environment(TripBuilder())
 }
