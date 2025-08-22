@@ -14,10 +14,6 @@ final class Router {
     func go(to route: Route) {
         path.append(route)
     }
-//    
-//    func pop() {
-//        path.removeLast()
-//    }
     
     func pop(_ count: Int = 1) {
         for _ in 0..<count where !path.isEmpty {
