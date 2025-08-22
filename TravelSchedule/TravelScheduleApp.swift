@@ -14,6 +14,8 @@ struct TravelScheduleApp: App {
     @State private var viewModel = SettlementViewModel()
     @State private var servicesFilters = ServicesFiltersViewModel()
     
+    @StateObject private var orientationObserver = OrientationObserver()
+    
     var body: some Scene {
         WindowGroup {
 //            ContentView()
@@ -21,6 +23,7 @@ struct TravelScheduleApp: App {
                 RootView()
                 .navigationDestination(for: Route.self, destination: destination)
             }
+            .environmentObject(orientationObserver)
             .environment(router)
             .environment(builder)
             .environment(viewModel)
