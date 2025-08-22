@@ -14,6 +14,8 @@ struct ServiceFiltersView: View {
     
     var body: some View {
         ZStack {
+            Color.ypWhite.ignoresSafeArea()
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Время отправления")
@@ -101,6 +103,7 @@ struct ServiceFiltersView: View {
                 }
             }
         }
+        .background(.ypWhite)
         .toolbarBackground(.ypWhite, for: .navigationBar)
     }
 }

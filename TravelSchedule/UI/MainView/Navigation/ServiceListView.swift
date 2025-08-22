@@ -20,8 +20,11 @@ struct ServiceListView: View {
     
     var body: some View {
         ZStack {
+            Color.ypWhite.ignoresSafeArea()
+            
             ScrollView {
                 Text(builder.routeDescription())
+                    .padding(.top, 16)
                     .font(.bold24)
                     .foregroundColor(.ypBlack)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -39,7 +42,6 @@ struct ServiceListView: View {
                 
                 Color.clear.frame(height: 84)
             }
-            .padding(.top, 16)
             
             VStack {
                 Spacer()
@@ -58,6 +60,7 @@ struct ServiceListView: View {
             }
         }
         .padding(.horizontal, 16)
+        .background(.ypWhite)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
