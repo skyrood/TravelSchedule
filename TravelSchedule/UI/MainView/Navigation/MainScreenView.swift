@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct MainScreenView: View {
-    //    @State private var path = NavigationPath()
-    //
-    //    @State private var builder = TripBuilder()
-    //    @State private var settlementViewModel = SettlementViewModel()
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
+    
+    @EnvironmentObject private var orientationObserver: OrientationObserver
     
     private var fromIsFilled: Bool {
         builder.from.settlement != nil && builder.from.station != nil
@@ -42,6 +40,18 @@ struct MainScreenView: View {
     }
     
     var body: some View {
+        Group {
+            if orientationObserver.isLandscape {
+                ScrollView { content }
+            } else {
+                content
+            }
+        }
+//        .padding(.bottom, 16)
+        .background(.ypWhite)
+    }
+    
+    var content: some View {
         VStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
@@ -129,13 +139,13 @@ struct MainScreenView: View {
                         .frame(width: 150, height: 60)
                         .contentShape(Rectangle())
                 }
-//                .listRowInsets(EdgeInsets())
                 .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
                 .padding(.top, 16)
             }
             
             Spacer()
         }
+        .padding(.bottom, 16)
         .background(.ypWhite)
     }
 }
