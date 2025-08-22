@@ -16,6 +16,8 @@ struct CarrierInfoView: View {
             VStack {
                 Spacer()
                 Text("Информация о перевозчике")
+                    .font(.bold24)
+                    .foregroundColor(.ypBlack)
                 Spacer()
             }
         }
