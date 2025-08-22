@@ -16,7 +16,7 @@ struct SettingsView: View {
                 Spacer()
                 Text("Настройки")
                     .font(.largeTitle)
-                    .foregroundColor(.white)
+                    .foregroundColor(.ypBlack)
                 Spacer()
             }
         }
