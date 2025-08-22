@@ -12,6 +12,7 @@ struct TravelScheduleApp: App {
     @State private var router = Router()
     @State private var builder = TripBuilder()
     @State private var viewModel = SettlementViewModel()
+    @State private var servicesFilters = ServicesFiltersViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -23,6 +24,7 @@ struct TravelScheduleApp: App {
             .environment(router)
             .environment(builder)
             .environment(viewModel)
+            .environment(servicesFilters)
         }
     }
     
@@ -35,6 +37,8 @@ struct TravelScheduleApp: App {
             StationSelectionView(settlement: settlement, kind: kind)
         case .serviceList:
             ServiceListView()
+        case .filters:
+            ServiceFiltersView()
         }
     }
 }
