@@ -35,7 +35,7 @@ struct ServiceListRow: View {
                     
                     Spacer()
                     
-                    Text(service.date)
+                    Text(service.departureDate)
                         .font(.regular12)
                         .foregroundColor(.ypBlackUniv)
                 }
@@ -43,19 +43,19 @@ struct ServiceListRow: View {
                 Spacer()
                 
                 HStack(spacing: 5) {
-                    Text(service.departureTime)
+                    Text(service.departureHHmm)
                         .font(.regular17)
                         .foregroundColor(.ypBlackUniv)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.ypGray)
-                    Text(service.duration)
+                    Text(service.durationText)
                         .font(.regular12)
                         .foregroundColor(.ypBlackUniv)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.ypGray)
-                    Text(service.arrivalTime)
+                    Text(service.arrivalHHmm)
                         .font(.regular17)
                         .foregroundColor(.ypBlackUniv)
                 }
@@ -69,12 +69,13 @@ struct ServiceListRow: View {
 }
 
 #Preview {
-    ServiceListRow(service: Service(companyName: "РЖД",
-                                    companyLogo: "BrandLogoExample",
-                                    transferInfo: "Пересадка в Костроме",
-                                    date: "14 января",
-                                    departureTime: "22:30",
-                                    arrivalTime: "08:15",
-                                    duration: "20 часов")
+    ServiceListRow(
+        service: Service(
+            companyName: "РЖД",
+            companyLogo: "RussianRailwaysLogo",
+            transferInfo: "Пересадка в Костроме",
+            departureTime: ISO8601DateFormatter().date(from: "2025-01-14T22:30:00+03:00")!,
+            arrivalTime: ISO8601DateFormatter().date(from: "2025-01-15T08:15:00+03:00")!
+        )
     )
 }
