@@ -10,10 +10,21 @@ import SwiftUI
 struct RootView: View {
     @State private var dataLoading = true
     
-    
     var body: some View {
-//        SplashScreen()
-        MainScreenTabView()
+        Group {
+            if dataLoading {
+                SplashScreen()
+            } else {
+                MainScreenTabView()
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation {
+                    dataLoading = false
+                }
+            }
+        }
     }
 }
 
