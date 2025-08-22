@@ -39,6 +39,7 @@ struct ServiceListView: View {
                 
                 Color.clear.frame(height: 84)
             }
+            .padding(.top, 16)
             
             VStack {
                 Spacer()
@@ -56,7 +57,6 @@ struct ServiceListView: View {
                 .padding(.bottom, 24)
             }
         }
-        .padding(.top, 16)
         .padding(.horizontal, 16)
         .navigationBarBackButtonHidden(true)
         .toolbar {
