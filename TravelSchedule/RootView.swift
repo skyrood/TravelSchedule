@@ -15,7 +15,7 @@ struct RootView: View {
             if dataLoading {
                 SplashScreen()
             } else {
-                MainScreenTabView()
+                RootTabView()
             }
         }
         .onAppear {
