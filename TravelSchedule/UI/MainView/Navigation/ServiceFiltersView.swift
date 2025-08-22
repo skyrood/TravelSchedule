@@ -101,6 +101,7 @@ struct ServiceFiltersView: View {
                 }
             }
         }
+        .toolbarBackground(.ypWhite, for: .navigationBar)
     }
 }
 

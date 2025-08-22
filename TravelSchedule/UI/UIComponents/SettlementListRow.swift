@@ -21,6 +21,7 @@ struct SettlementListRow: View {
         }
         .frame(height: rowHeight)
         .contentShape(Rectangle())
+        .background(.ypWhite)
     }
 }
 

@@ -31,41 +31,48 @@ struct StationSelectionView: View {
     }
     
     var body: some View {
-        if filteredStations.isEmpty {
-            Spacer()
-            Text("Станция не найдена")
-            Spacer()
-        } else {
-            List {
-                ForEach(filteredStations) { station in
-                    Button {
-                        print("selected \(station.name)")
-                        builder.setStation(station: station, for: kind)
-                        router.pop(2)
-                    } label: {
-                        StationListRow(station: station)
-                    }
-                    .buttonStyle(.plain)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                }
-            }
-            .listStyle(.inset)
-            .navigationTitle("Выбор станции")
-            .navigationBarBackButtonHidden(true)
-            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .tint(.ypBlack)
+        ZStack {
+            Color.ypWhite.ignoresSafeArea()
+            
+            if filteredStations.isEmpty {
+                Spacer()
+                Text("Станция не найдена")
+                Spacer()
+            } else {
+                List {
+                    ForEach(filteredStations) { station in
+                        Button {
+                            print("selected \(station.name)")
+                            builder.setStation(station: station, for: kind)
+                            router.pop(2)
+                        } label: {
+                            StationListRow(station: station)
+                        }
+                        .buttonStyle(.plain)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
                     }
                 }
+                .listStyle(.inset)
+                .scrollContentBackground(.hidden)
+                .background(.ypWhite)
+                .navigationTitle("Выбор станции")
+                .navigationBarBackButtonHidden(true)
+                .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .tint(.ypBlack)
+                        }
+                    }
+                }
+                .toolbarBackground(.ypWhite, for: .navigationBar)
+                .padding(.leading, 16)
+                .padding(.trailing, 18)
             }
-            .padding(.leading, 16)
-            .padding(.trailing, 18)
         }
     }
 }

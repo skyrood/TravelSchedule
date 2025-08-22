@@ -69,6 +69,7 @@ struct ServiceListView: View {
                 }
             }
         }
+        .toolbarBackground(.ypWhite, for: .navigationBar)
     }
 }
 

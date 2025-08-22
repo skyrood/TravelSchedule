@@ -20,6 +20,7 @@ struct StationListRow: View {
         }
         .frame(height: rowHeight)
         .contentShape(Rectangle())
+        .background(.ypWhite)
     }
 }
 
