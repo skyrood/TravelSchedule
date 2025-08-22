@@ -31,36 +31,40 @@ struct StationSelectionView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(filteredStations) { station in
-                Button {
-                    print("selected \(station.name)")
-                    builder.setStation(station: station, for: kind)
-                    router.pop(2)
-                } label: {
-                    StationListRow(station: station)
-                }
-                .buttonStyle(.plain)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-            }
-        }
-        .listStyle(.inset)
-        .navigationTitle("Выбор станции")
-        .navigationBarBackButtonHidden(true)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .tint(.ypBlack)
+        if filteredStations.isEmpty {
+            Text("Станция не найдена")
+        } else {
+            List {
+                ForEach(filteredStations) { station in
+                    Button {
+                        print("selected \(station.name)")
+                        builder.setStation(station: station, for: kind)
+                        router.pop(2)
+                    } label: {
+                        StationListRow(station: station)
+                    }
+                    .buttonStyle(.plain)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 }
             }
+            .listStyle(.inset)
+            .navigationTitle("Выбор станции")
+            .navigationBarBackButtonHidden(true)
+            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .tint(.ypBlack)
+                    }
+                }
+            }
+            .padding(.leading, 16)
+            .padding(.trailing, 18)
         }
-        .padding(.leading, 16)
-        .padding(.trailing, 18)
     }
 }
 
