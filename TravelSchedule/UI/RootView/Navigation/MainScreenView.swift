@@ -47,7 +47,6 @@ struct MainScreenView: View {
                 content
             }
         }
-//        .environment(router)
         .background(.ypWhite)
     }
     
@@ -131,7 +130,6 @@ struct MainScreenView: View {
             
             if builder.isReady {
                 Button {
-                    print("searching...")
                     router.go(to: .serviceList)
                 } label: {
                     Text("Найти")

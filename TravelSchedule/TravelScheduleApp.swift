@@ -20,13 +20,13 @@ struct TravelScheduleApp: App {
         WindowGroup {
             NavigationStack(path: router.pathBinding()) {
                 RootView()
-                    .environmentObject(orientationObserver)
-                    .environment(router)
-                    .environment(builder)
-                    .environment(viewModel)
-                    .environment(servicesFilters)
                     .navigationDestination(for: Route.self, destination: destination)
             }
+            .environmentObject(orientationObserver)
+            .environment(router)
+            .environment(builder)
+            .environment(viewModel)
+            .environment(servicesFilters)
         }
     }
     

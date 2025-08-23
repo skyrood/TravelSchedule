@@ -38,7 +38,6 @@ struct RootTabView: View {
             .tabItem { Image(.settingsTabIcon).renderingMode(.template) }
         }
         .tint(.ypBlack)
-//        .environment(router)
     }
 }
 
