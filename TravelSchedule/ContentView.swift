@@ -16,16 +16,6 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
-        .onAppear {
-//            testGetServicesBetweenStations()
-//            testGetStationSchedule()
-//            testGetRouteStations()
-//            testGetNearestStations()
-//            testGetNearestSettlement()
-//            testGetCarrierInfo()
-//            testGetAllstations()
-//            testGetCopyrightInfo()
-        }
     }
     
     func testGetServicesBetweenStations() {
