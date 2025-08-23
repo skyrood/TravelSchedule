@@ -37,6 +37,8 @@ struct StationSelectionView: View {
             if filteredStations.isEmpty {
                 Spacer()
                 Text("Станция не найдена")
+                    .font(.bold24)
+                    .foregroundColor(.ypBlack)
                 Spacer()
             } else {
                 List {
@@ -53,34 +55,33 @@ struct StationSelectionView: View {
                         .listRowSeparator(.hidden)
                     }
                 }
-                .listStyle(.inset)
-                .scrollContentBackground(.hidden)
-                .background(.ypWhite)
-                .navigationTitle("Выбор станции")
-                .navigationBarBackButtonHidden(true)
-                .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .tint(.ypBlack)
-                        }
-                    }
-                }
-                .toolbarBackground(.ypWhite, for: .navigationBar)
+                .listStyle(.plain)
                 .padding(.leading, 16)
                 .padding(.trailing, 18)
             }
         }
+        .background(.ypWhite)
+        .navigationTitle("Выбор станции")
+        .navigationBarBackButtonHidden(true)
+        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.ypBlack)
+                }
+            }
+        }
+        .toolbarBackground(.ypWhite, for: .navigationBar)
     }
 }
 
 
 #Preview {
     StationSelectionView(
-        settlement: Settlement(name: "Омск", stations: [Station(name: "Омск")]),
+        settlement: Settlement(name: "Омск", stations: [Station(name: "Омск"), Station(name: "Не Омск")]),
         kind: .from
     )
     .environment(Router())

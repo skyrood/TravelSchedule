@@ -37,6 +37,7 @@ struct SettlementSelectionView: View {
                 Spacer()
                 Text("Город не найден")
                     .font(.bold24)
+                    .foregroundColor(.ypBlack)
                 Spacer()
             } else {
                 List {
@@ -52,27 +53,26 @@ struct SettlementSelectionView: View {
                         .listRowSeparator(.hidden)
                     }
                 }
-                .listStyle(.inset)
-                .scrollContentBackground(.hidden)
+                .listStyle(.plain)
                 .background(.ypWhite)
-                .navigationTitle("Выбор города")
-                .navigationBarBackButtonHidden(true)
-                .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .tint(.ypBlack)
-                        }
-                    }
-                }
-                .toolbarBackground(.ypWhite, for: .navigationBar)
                 .padding(.leading, 16)
                 .padding(.trailing, 18)
             }
         }
+        .navigationTitle("Выбор города")
+        .navigationBarBackButtonHidden(true)
+        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.ypBlack)
+                }
+            }
+        }
+        .toolbarBackground(.ypWhite, for: .navigationBar)
     }
 }
 
