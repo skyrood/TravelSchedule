@@ -35,7 +35,7 @@ struct StationSelectionView: View {
             Color.ypWhite.ignoresSafeArea()
             
             if filteredStations.isEmpty {
-                noResultsView
+                noResults
                 
             } else {
                 stationList
@@ -51,7 +51,7 @@ struct StationSelectionView: View {
         .toolbarBackground(.ypWhite, for: .navigationBar)
     }
     
-    var noResultsView: some View {
+    var noResults: some View {
         VStack {
             Spacer()
             Text("Станция не найдена")

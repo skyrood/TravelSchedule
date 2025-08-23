@@ -52,8 +52,8 @@ struct MainScreenView: View {
     
     var content: some View {
         VStack {
-            storiesSectionView
-            routeInputSectionView
+            storiesSection
+            routeInputSection
             if builder.isReady {
                 searchButton
             }
@@ -63,7 +63,7 @@ struct MainScreenView: View {
         .background(.ypWhite)
     }
     
-    var storiesSectionView: some View {
+    var storiesSection: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 Color.clear.frame(width: 4)
@@ -79,7 +79,7 @@ struct MainScreenView: View {
         .fixedSize(horizontal: false, vertical: true)
     }
     
-    var routeInputSectionView: some View {
+    var routeInputSection: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(.ypBlue)

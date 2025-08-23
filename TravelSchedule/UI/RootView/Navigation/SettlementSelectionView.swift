@@ -33,9 +33,9 @@ struct SettlementSelectionView: View {
             Color.ypWhite.ignoresSafeArea()
             
             if filteredSettlements.isEmpty {
-                noResultsView
+                noResults
             } else {
-                settlementListView
+                settlementList
             }
         }
         .navigationTitle("Выбор города")
@@ -47,7 +47,7 @@ struct SettlementSelectionView: View {
         .toolbarBackground(.ypWhite, for: .navigationBar)
     }
     
-    var noResultsView: some View {
+    var noResults: some View {
         VStack {
             Spacer()
             Text("Город не найден")
@@ -57,7 +57,7 @@ struct SettlementSelectionView: View {
         }
     }
     
-    var settlementListView: some View {
+    var settlementList: some View {
         List {
             ForEach(filteredSettlements) { settlement in
                 Button {
