@@ -47,6 +47,7 @@ struct MainScreenView: View {
                 content
             }
         }
+//        .environment(router)
         .background(.ypWhite)
     }
     

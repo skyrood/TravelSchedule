@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     @State private var dataLoading = true
-    
+
     var body: some View {
         Group {
             if dataLoading {

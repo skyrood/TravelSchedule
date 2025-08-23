@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RootTabView: View {
-    @State private var router = Router()
+    @Environment(Router.self) private var router
     
     init() {
         let appearance = UITabBarAppearance()
@@ -22,29 +22,11 @@ struct RootTabView: View {
     }
     
     var body: some View {
-        TabView(selection: $router.selectedTab) {
+        TabView {
+            MainScreenView()
+                .tabItem { Image(.scheduleTabIcon).renderingMode(.template) }
             
-            NavigationStack(path: router.pathBinding(for: .schedule)) {
-                MainScreenView()
-                    .navigationDestination(for: Route.self) { route in
-                        switch route {
-                        case .settlement(let kind):
-                            SettlementSelectionView(kind: kind)
-                        case .station(let s, let kind):
-                            StationSelectionView(settlement: s, kind: kind)
-                        case .serviceList:
-                            ServiceListView()
-                        case .filters:
-                            ServiceFiltersView()
-                        case .carrierInfo:
-                            CarrierInfoView()
-                        }
-                    }
-            }
-            .tabItem { Image(.scheduleTabIcon).renderingMode(.template) }
-            .tag(AppTabRoute.schedule)
-            
-            NavigationStack(path: router.pathBinding(for: .settings)) {
+            NavigationStack(path: router.settingsPathBinding()) {
                 SettingsView()
                     .navigationDestination(for: SettingsRoute.self) { route in
                         switch route {
@@ -54,10 +36,9 @@ struct RootTabView: View {
                     }
             }
             .tabItem { Image(.settingsTabIcon).renderingMode(.template) }
-            .tag(AppTabRoute.settings)
         }
         .tint(.ypBlack)
-        .environment(router)
+//        .environment(router)
     }
 }
 
