@@ -52,100 +52,101 @@ struct MainScreenView: View {
     
     var content: some View {
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    Color.clear.frame(width: 4)
-                    
-                    ForEach(0..<7) { index in
-                        StoryExampleView()
-                    }
-                    
-                    Color.clear.frame(width: 4)
-                }
-            }
-            .padding(.vertical, 24)
-            .fixedSize(horizontal: false, vertical: true)
-            
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(.ypBlue)
-                    .frame(height: 128)
-                    .frame(maxWidth: .infinity)
-                
-                HStack(spacing: 16) {
-                    VStack(spacing: 0) {
-                        Button {
-                            router.go(to: .settlement(kind: .from))
-                        } label: {
-                            Text(fromTitle)
-                                .foregroundColor(fromIsFilled ? .ypBlackUniv : .ypGray)
-                                .font(.regular17)
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                                .padding(.horizontal, 16)
-                                .contentShape(Rectangle())
-                        }
-                        
-                        Button {
-                            router.go(to: .settlement(kind: .to))
-                        } label: {
-                            Text(toTitle)
-                                .foregroundColor(toIsFilled ? .ypBlackUniv : .ypGray)
-                                .font(.regular17)
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                                .padding(.horizontal, 16)
-                                .contentShape(Rectangle())
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.ypWhiteUniv)
-                    )
-                    
-                    Button {
-                        let temp = builder.from
-                        builder.from = builder.to
-                        builder.to = temp
-                    } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 18)
-                                .fill(.ypWhiteUniv)
-                                .frame(width: 36, height: 36)
-                            
-                            Image(systemName: "arrow.2.squarepath")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 16)
-                                .foregroundColor(.ypBlue)
-                        }
-                    }
-                    .padding(.trailing, 16)
-                }
-                .padding(.leading, 16)
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 20)
-            
+            storiesSectionView
+            routeInputSectionView
             if builder.isReady {
-                Button {
-                    router.go(to: .serviceList)
-                } label: {
-                    Text("Найти")
-                        .font(.bold17)
-                        .foregroundColor(.ypWhiteUniv)
-                        .frame(width: 150, height: 60)
-                        .contentShape(Rectangle())
-                }
-                .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
-                .padding(.top, 16)
+                searchButton
             }
-            
             Spacer()
         }
         .padding(.bottom, 16)
         .background(.ypWhite)
+    }
+    
+    var storiesSectionView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                Color.clear.frame(width: 4)
+                
+                ForEach(0..<7) { index in
+                    StoryExampleView()
+                }
+                
+                Color.clear.frame(width: 4)
+            }
+        }
+        .padding(.vertical, 24)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+    
+    var routeInputSectionView: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.ypBlue)
+                .frame(height: 128)
+                .frame(maxWidth: .infinity)
+            
+            HStack(spacing: 16) {
+                VStack(spacing: 0) {
+                    RouteInputField(
+                        title: fromTitle,
+                        isFilled: fromIsFilled,
+                        action: {
+                            router.go(to: .settlement(kind: .from))
+                        }
+                    )
+                    
+                    RouteInputField(
+                        title: toTitle,
+                        isFilled: toIsFilled,
+                        action: {
+                            router.go(to: .settlement(kind: .to))
+                        }
+                    )
+                }
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.ypWhiteUniv)
+                )
+                
+                Button {
+                    let temp = builder.from
+                    builder.from = builder.to
+                    builder.to = temp
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(.ypWhiteUniv)
+                            .frame(width: 36, height: 36)
+                        
+                        Image(systemName: "arrow.2.squarepath")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 16)
+                            .foregroundColor(.ypBlue)
+                    }
+                }
+                .padding(.trailing, 16)
+            }
+            .padding(.leading, 16)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 20)
+    }
+    
+    var searchButton: some View {
+        Button {
+            router.go(to: .serviceList)
+        } label: {
+            Text("Найти")
+                .font(.bold17)
+                .foregroundColor(.ypWhiteUniv)
+                .frame(width: 150, height: 60)
+                .contentShape(Rectangle())
+        }
+        .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
+        .padding(.top, 16)
     }
 }
 
