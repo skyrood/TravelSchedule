@@ -65,14 +65,7 @@ struct StationSelectionView: View {
         .navigationBarBackButtonHidden(true)
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .tint(.ypBlack)
-                }
-            }
+            Toolbar()
         }
         .toolbarBackground(.ypWhite, for: .navigationBar)
     }

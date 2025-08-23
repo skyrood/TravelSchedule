@@ -68,14 +68,7 @@ struct ServiceListView: View {
         .background(.ypWhite)
         .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .tint(.ypBlack)
-                }
-            }
+            Toolbar()
         }
         .toolbarBackground(.ypWhite, for: .navigationBar)
     }

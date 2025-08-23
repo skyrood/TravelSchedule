@@ -94,14 +94,7 @@ struct ServiceFiltersView: View {
         .padding(.horizontal, 16)
         .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .tint(.ypBlack)
-                }
-            }
+            Toolbar()
         }
         .background(.ypWhite)
         .toolbarBackground(.ypWhite, for: .navigationBar)
