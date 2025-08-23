@@ -22,47 +22,8 @@ struct ServiceListView: View {
         ZStack {
             Color.ypWhite.ignoresSafeArea()
             
-            ScrollView {
-                Text(builder.routeDescription())
-                    .padding(.top, 16)
-                    .font(.bold24)
-                    .foregroundColor(.ypBlack)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                LazyVStack {
-                    if filteredServices.isEmpty {
-                        Text("Вариантов нет")
-                            .font(.bold24)
-                    } else {
-                        ForEach(filteredServices) { service in
-                            Button {
-                                router.go(to: .carrierInfo)
-                            } label: {
-                                ServiceListRow(service: service)
-
-                            }
-                        }
-                    }
-                }
-                
-                Color.clear.frame(height: 84)
-            }
-            
-            VStack {
-                Spacer()
-                
-                Button {
-                    router.go(to: .filters)
-                } label: {
-                    Text("Уточнить время")
-                        .font(.bold17)
-                        .foregroundColor(.ypWhiteUniv)
-                        .frame(maxWidth: .infinity, minHeight: 60)
-                        .contentShape(Rectangle())
-                }
-                .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
-                .padding(.bottom, 24)
-            }
+            serviceList
+            filtersButton
         }
         .padding(.horizontal, 16)
         .background(.ypWhite)
@@ -71,6 +32,52 @@ struct ServiceListView: View {
             Toolbar()
         }
         .toolbarBackground(.ypWhite, for: .navigationBar)
+    }
+    
+    var serviceList: some View {
+        ScrollView {
+            Text(builder.routeDescription())
+                .padding(.top, 16)
+                .font(.bold24)
+                .foregroundColor(.ypBlack)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            LazyVStack {
+                if filteredServices.isEmpty {
+                    Text("Вариантов нет")
+                        .font(.bold24)
+                } else {
+                    ForEach(filteredServices) { service in
+                        Button {
+                            router.go(to: .carrierInfo)
+                        } label: {
+                            ServiceListRow(service: service)
+
+                        }
+                    }
+                }
+            }
+            
+            Color.clear.frame(height: 84)
+        }
+    }
+    
+    var filtersButton: some View {
+        VStack {
+            Spacer()
+            
+            Button {
+                router.go(to: .filters)
+            } label: {
+                Text("Уточнить время")
+                    .font(.bold17)
+                    .foregroundColor(.ypWhiteUniv)
+                    .frame(maxWidth: .infinity, minHeight: 60)
+                    .contentShape(Rectangle())
+            }
+            .background(RoundedRectangle(cornerRadius: 20).fill(.ypBlue))
+            .padding(.bottom, 24)
+        }
     }
 }
 

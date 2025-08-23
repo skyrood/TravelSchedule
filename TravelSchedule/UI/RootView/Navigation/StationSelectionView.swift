@@ -35,29 +35,10 @@ struct StationSelectionView: View {
             Color.ypWhite.ignoresSafeArea()
             
             if filteredStations.isEmpty {
-                Spacer()
-                Text("Станция не найдена")
-                    .font(.bold24)
-                    .foregroundColor(.ypBlack)
-                Spacer()
+                noResultsView
+                
             } else {
-                List {
-                    ForEach(filteredStations) { station in
-                        Button {
-                            print("selected \(station.name)")
-                            builder.setStation(station: station, for: kind)
-                            router.pop(2)
-                        } label: {
-                            StationListRow(station: station)
-                        }
-                        .buttonStyle(.plain)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                    }
-                }
-                .listStyle(.plain)
-                .padding(.leading, 16)
-                .padding(.trailing, 18)
+                stationList
             }
         }
         .background(.ypWhite)
@@ -68,6 +49,36 @@ struct StationSelectionView: View {
             Toolbar()
         }
         .toolbarBackground(.ypWhite, for: .navigationBar)
+    }
+    
+    var noResultsView: some View {
+        VStack {
+            Spacer()
+            Text("Станция не найдена")
+                .font(.bold24)
+                .foregroundColor(.ypBlack)
+            Spacer()
+        }
+    }
+    
+    var stationList: some View {
+        List {
+            ForEach(filteredStations) { station in
+                Button {
+                    print("selected \(station.name)")
+                    builder.setStation(station: station, for: kind)
+                    router.pop(2)
+                } label: {
+                    StationListRow(station: station)
+                }
+                .buttonStyle(.plain)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+            }
+        }
+        .listStyle(.plain)
+        .padding(.leading, 16)
+        .padding(.trailing, 18)
     }
 }
 
