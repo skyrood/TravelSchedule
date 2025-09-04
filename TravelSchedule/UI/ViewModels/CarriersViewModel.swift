@@ -16,22 +16,25 @@ final class CarriersViewModel {
     
     private func loadMockCarriers() {
         let rzd = Carrier(
-            companyName: "РЖД",
+            companyName: "ОАО «РЖД»",
             companyLogo: "RussianRailwaysLogo",
+            companyLogoBig: "RussianRailwaysLogoBig",
             email: "support@rzd.ru",
             phoneNumber: "+7 (800) 775-00-00"
         )
         
         let fgk = Carrier(
-            companyName: "ФГК",
+            companyName: "АО «ФГК»",
             companyLogo: "FGKLogo",
+            companyLogoBig: "FGKLogoBig",
             email: "contact@fgk.ru",
             phoneNumber: "+7 (495) 123-45-67"
         )
         
         let uralLogistics = Carrier(
-            companyName: "Урал логистика",
+            companyName: "ООО «Урал Логистика»",
             companyLogo: "UralLogisticsLogo",
+            companyLogoBig: "UralLogisticsLogoBig",
             email: "info@urallogistics.ru",
             phoneNumber: "+7 (343) 777-88-99"
         )

@@ -11,6 +11,7 @@ struct Carrier: Identifiable, Hashable {
     let id = UUID()
     let companyName: String
     let companyLogo: String
+    let companyLogoBig: String
     let email: String
     let phoneNumber: String
 }

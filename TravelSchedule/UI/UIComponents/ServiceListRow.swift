@@ -74,6 +74,7 @@ struct ServiceListRow: View {
             carrier: Carrier(
                 companyName: "РЖД",
                 companyLogo: "RussianRailwaysLogo",
+                companyLogoBig: "RussianRailwaysLogoBig",
                 email: "rzd@rzd.ru",
                 phoneNumber: "+81 312 333 111"
             ),

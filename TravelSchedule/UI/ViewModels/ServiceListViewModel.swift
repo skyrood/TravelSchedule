@@ -18,9 +18,9 @@ final class ServiceListViewModel {
     
     private func loadMockServices() {
         guard
-            let rzd = carriersViewModel.carrier(named: "РЖД"),
-            let fgk = carriersViewModel.carrier(named: "ФГК"),
-            let uralLogistics = carriersViewModel.carrier(named: "Урал логистика")
+            let rzd = carriersViewModel.carrier(named: "ОАО «РЖД»"),
+            let fgk = carriersViewModel.carrier(named: "АО «ФГК»"),
+            let uralLogistics = carriersViewModel.carrier(named: "ООО «Урал Логистика»")
         else { return }
         
         services = [
