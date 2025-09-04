@@ -41,8 +41,8 @@ struct TravelScheduleApp: App {
             ServiceListView()
         case .filters:
             ServiceFiltersView()
-        case .carrierInfo:
-            CarrierInfoView()
+        case .carrierInfo(let carrier):
+            CarrierInfoView(carrier: carrier)
         }
     }
 }

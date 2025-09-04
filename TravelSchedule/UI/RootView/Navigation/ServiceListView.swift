@@ -49,10 +49,9 @@ struct ServiceListView: View {
                 } else {
                     ForEach(filteredServices) { service in
                         Button {
-                            router.go(to: .carrierInfo)
+                            router.go(to: .carrierInfo(carrier: service.carrier))
                         } label: {
                             ServiceListRow(service: service)
-
                         }
                     }
                 }
