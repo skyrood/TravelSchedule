@@ -9,8 +9,7 @@ import SwiftUI
 
 struct Service: Identifiable, Hashable {
     let id = UUID()
-    let companyName: String
-    let companyLogo: String
+    let carrier: Carrier
     let transferInfo: String?
     let departureTime: Date
     let arrivalTime: Date
