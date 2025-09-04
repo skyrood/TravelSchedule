@@ -1,0 +1,35 @@
+//
+//  CarrierInfoView.swift
+//  TravelSchedule
+//
+//  Created by Rodion Kim on 2025/08/22.
+//
+
+import SwiftUI
+
+struct CarrierInfoView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        ZStack {
+            Color.ypWhite.ignoresSafeArea()
+            VStack {
+                Spacer()
+                Text("Информация о перевозчике")
+                    .font(.bold24)
+                    .foregroundColor(.ypBlack)
+                Spacer()
+            }
+        }
+        .background(.ypWhite)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            Toolbar()
+        }
+        .toolbarBackground(.ypWhite, for: .navigationBar)
+    }
+}
+
+#Preview {
+    CarrierInfoView()
+}
