@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct TravelScheduleApp: App {
     @StateObject private var orientationObserver = OrientationObserver()
+    @StateObject private var colorSchemeManager = ColorSchemeManager()
     
     @State private var router = Router()
     @State private var builder = TripBuilder()
@@ -23,10 +24,12 @@ struct TravelScheduleApp: App {
                     .navigationDestination(for: Route.self, destination: destination)
             }
             .environmentObject(orientationObserver)
+            .environmentObject(colorSchemeManager)
             .environment(router)
             .environment(builder)
             .environment(viewModel)
             .environment(servicesFilters)
+            .preferredColorScheme(colorSchemeManager.currentColorScheme)
         }
     }
     
