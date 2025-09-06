@@ -33,6 +33,8 @@ struct TravelScheduleApp: App {
     @ViewBuilder
     private func destination(_ route: Route) -> some View {
         switch route {
+        case .mainScreen:
+            MainScreenView()
         case .settlement(let kind):
             SettlementSelectionView(kind: kind)
         case .station(let settlement, let kind):
@@ -43,6 +45,13 @@ struct TravelScheduleApp: App {
             ServiceFiltersView()
         case .carrierInfo(let carrier):
             CarrierInfoView(carrier: carrier)
+        case .settings(let subroute):
+            switch subroute {
+            case .connectionError:
+                ConnectionErrorView()
+            case .serverError:
+                ServerErrorView()
+            }
         }
     }
 }

@@ -26,16 +26,8 @@ struct RootTabView: View {
             MainScreenView()
                 .tabItem { Image(.scheduleTabIcon).renderingMode(.template) }
             
-            NavigationStack(path: router.settingsPathBinding()) {
-                SettingsView()
-                    .navigationDestination(for: SettingsRoute.self) { route in
-                        switch route {
-                        case .connectionError: ConnectionErrorView()
-                        case .serverError: ServerErrorView()
-                        }
-                    }
-            }
-            .tabItem { Image(.settingsTabIcon).renderingMode(.template) }
+            SettingsView()
+                .tabItem { Image(.settingsTabIcon).renderingMode(.template) }
         }
         .tint(.ypBlack)
     }
