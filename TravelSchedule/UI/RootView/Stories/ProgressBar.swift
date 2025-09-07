@@ -14,39 +14,40 @@ extension CGFloat {
 
 struct ProgressBar: View {
     let numberOfSections: Int
-        let progress: CGFloat
-        private let spacing: CGFloat = 6
-
-        var body: some View {
-            GeometryReader { geometry in
-                let totalSpacing = spacing * CGFloat(numberOfSections - 1)
-                let segmentWidth = (geometry.size.width - totalSpacing) / CGFloat(numberOfSections)
-
-                ZStack(alignment: .leading) {
-                    // Фон
-                    HStack(spacing: spacing) {
-                        ForEach(0..<numberOfSections, id: \.self) { _ in
-                            RoundedRectangle(cornerRadius: .progressBarCornerRadius)
-                                .fill(Color.white)
-                                .frame(width: segmentWidth, height: .progressBarHeight)
-                        }
+    let progress: CGFloat
+    private let spacing: CGFloat = 6
+    
+    var body: some View {
+        GeometryReader { geometry in
+            let safeNumberOfSections = max(1, numberOfSections)
+            let totalSpacing = spacing * CGFloat(safeNumberOfSections - 1)
+            let totalWidth = geometry.size.width
+            let segmentWidth = max(0, (totalWidth - totalSpacing) / CGFloat(safeNumberOfSections))
+            
+            ZStack(alignment: .leading) {
+                HStack(spacing: spacing) {
+                    ForEach(0..<safeNumberOfSections, id: \.self) { _ in
+                        RoundedRectangle(cornerRadius: .progressBarCornerRadius)
+                            .fill(Color.white)
+                            .frame(width: segmentWidth, height: .progressBarHeight)
                     }
-
-                    // Прогресс
-                    HStack(spacing: spacing) {
-                        ForEach(0..<numberOfSections, id: \.self) { index in
-                            let sectionProgress = progress * CGFloat(numberOfSections)
-                            let fillRatio = min(max(sectionProgress - CGFloat(index), 0), 1)
-
-                            RoundedRectangle(cornerRadius: .progressBarCornerRadius)
-                                .fill(Color.ypBlue)
-                                .frame(width: segmentWidth * fillRatio, height: .progressBarHeight)
-                        }
+                }
+                
+                HStack(spacing: spacing) {
+                    ForEach(0..<safeNumberOfSections, id: \.self) { index in
+                        let sectionProgress = progress * CGFloat(safeNumberOfSections)
+                        let fillRatio = min(max(sectionProgress - CGFloat(index), 0), 1)
+                        let fillWidth = max(0, segmentWidth * fillRatio)
+                        
+                        RoundedRectangle(cornerRadius: .progressBarCornerRadius)
+                            .fill(Color.ypBlue)
+                            .frame(width: fillWidth, height: .progressBarHeight)
                     }
                 }
             }
-            .frame(height: .progressBarHeight)
         }
+        .frame(height: .progressBarHeight)
+    }
 }
 
 private struct MaskView: View {
