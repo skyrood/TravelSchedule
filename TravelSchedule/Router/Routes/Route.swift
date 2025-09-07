@@ -15,4 +15,5 @@ enum Route: Hashable {
     case filters
     case carrierInfo(carrier: Carrier)
     case settings(SettingsRoute)
+    case stories(index: Int = 0)
 }
