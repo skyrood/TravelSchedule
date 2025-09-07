@@ -54,7 +54,10 @@ struct TravelScheduleApp: App {
                 ConnectionErrorView()
             case .serverError:
                 ServerErrorView()
+            case .userAgreement:
+                UserAgreementView()
             }
+            
         }
     }
 }

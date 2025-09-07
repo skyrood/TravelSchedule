@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var colorSchemeManager: ColorSchemeManager
+    @Environment(Router.self) private var router
     
     let rowHeight: CGFloat = 60
     
@@ -17,34 +18,12 @@ struct SettingsView: View {
             Color.ypWhite.ignoresSafeArea()
             
             VStack {
-                HStack {
-                    Text("Темная тема")
-                        .font(.regular17)
-                    
-                    Spacer()
-                    
-                    Toggle("", isOn: switchColorScheme())
-                        .tint(.ypBlue)
-                }
-                .frame(height: rowHeight)
-                
-                HStack {
-                    Text("Пользовательское соглашение")
-                        .font(.regular17)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "chevron.right")
-                }
-                .frame(height: rowHeight)
-                .contentShape(Rectangle())
-                
+                colorSchemeSwitch
+                userAgreementButton
+    
                 Spacer()
                 
-                Text("Приложение использует API «Яндекс.Расписания»\nВерсия 1.0 (beta)")
-                    .font(.regular12)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(16)
+                legalInfo
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 24)
@@ -53,6 +32,44 @@ struct SettingsView: View {
             Image(.settingsTabIcon)
                 .renderingMode(.template)
         }
+    }
+    
+    var colorSchemeSwitch: some View {
+        HStack {
+            Text("Темная тема")
+                .font(.regular17)
+            
+            Spacer()
+            
+            Toggle("", isOn: switchColorScheme())
+                .tint(.ypBlue)
+        }
+        .frame(height: rowHeight)
+    }
+    
+    var userAgreementButton: some View {
+        Button {
+            router.go(to: .settings(.userAgreement))
+        } label: {
+            HStack {
+                Text("Пользовательское соглашение")
+                    .font(.regular17)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+            }
+            .frame(height: rowHeight)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+    
+    var legalInfo: some View {
+        Text("Приложение использует API «Яндекс.Расписания»\nВерсия 1.0 (beta)")
+            .font(.regular12)
+            .multilineTextAlignment(.center)
+            .lineSpacing(16)
     }
     
     private func switchColorScheme() -> Binding<Bool> {
@@ -67,5 +84,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(Router())
         .environmentObject(ColorSchemeManager())
 }
