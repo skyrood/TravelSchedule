@@ -42,6 +42,7 @@ struct StoryView: View {
             Text(story.title)
                 .font(.bold34)
                 .foregroundColor(.ypWhiteUniv)
+                .lineLimit(2)
             
             Text(story.description)
                 .font(.regular20)
