@@ -16,6 +16,7 @@ struct TravelScheduleApp: App {
     @State private var builder = TripBuilder()
     @State private var viewModel = SettlementViewModel()
     @State private var servicesFilters = ServicesFiltersViewModel()
+    @State private var storiesViewModel = StoriesViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -29,6 +30,7 @@ struct TravelScheduleApp: App {
             .environment(builder)
             .environment(viewModel)
             .environment(servicesFilters)
+            .environment(storiesViewModel)
             .preferredColorScheme(colorSchemeManager.currentColorScheme)
         }
     }
@@ -57,7 +59,8 @@ struct TravelScheduleApp: App {
             case .userAgreement:
                 UserAgreementView()
             }
-            
+        case .stories(let index):
+            StoriesView(startIndex: index)
         }
     }
 }
