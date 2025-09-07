@@ -10,6 +10,7 @@ import SwiftUI
 struct MainScreenView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
+    @Environment(StoriesViewModel.self) private var storiesViewModel
     
     @EnvironmentObject private var orientationObserver: OrientationObserver
     
@@ -59,8 +60,9 @@ struct MainScreenView: View {
             }
             Spacer()
         }
-        .padding(.bottom, 16)
+        .padding(.vertical, 68)
         .background(.ypWhite)
+        .ignoresSafeArea(edges: .top)
     }
     
     var storiesSection: some View {
@@ -68,14 +70,20 @@ struct MainScreenView: View {
             HStack(spacing: 12) {
                 Color.clear.frame(width: 4)
                 
-                ForEach(0..<7) { index in
-                    StoryExampleView()
+                ForEach(Array(storiesViewModel.stories.enumerated()), id: \.element.id) { index, story in
+                    StoryPreview(
+                        story: story,
+                        isViewed: story.isViewed
+                    ) {
+                        storiesViewModel.markStoryAsViewed(at: index)
+                        router.go(to: .stories(index: index))
+                    }
                 }
                 
                 Color.clear.frame(width: 4)
             }
         }
-        .padding(.vertical, 24)
+        .padding(.bottom, 24)
         .fixedSize(horizontal: false, vertical: true)
     }
     
@@ -155,4 +163,5 @@ struct MainScreenView: View {
         .environmentObject(OrientationObserver())
         .environment(Router())
         .environment(TripBuilder())
+        .environment(StoriesViewModel())
 }
