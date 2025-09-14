@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-struct Story {
-    let id = UUID()
-    let backgroundImage: Image
-    let title: String
-    let description: String
-    var isViewed: Bool = false
-}
-
 @Observable
 final class StoriesViewModel {
     var stories: [Story] = []
