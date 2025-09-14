@@ -8,9 +8,12 @@
 import Foundation
 
 enum Route: Hashable {
+    case mainScreen
     case settlement(kind: SelectionKind)
     case station(settlement: Settlement, kind: SelectionKind)
     case serviceList
     case filters
-    case carrierInfo
+    case carrierInfo(carrier: Carrier)
+    case settings(SettingsRoute)
+    case stories(index: Int = 0)
 }

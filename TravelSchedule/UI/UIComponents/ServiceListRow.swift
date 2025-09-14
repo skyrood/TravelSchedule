@@ -15,14 +15,14 @@ struct ServiceListRow: View {
             VStack {
                 HStack(alignment: .top) {
                     HStack {
-                        Image(service.companyLogo)
+                        Image(service.carrier.companyLogo)
                             .resizable()
                             .frame(width: 38, height: 38)
                             .clipped()
                             .cornerRadius(12)
                             
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(service.companyName)
+                            Text(service.carrier.companyName)
                                 .lineLimit(1)
                                 .font(.regular17)
                                 .foregroundColor(.ypBlackUniv)
@@ -71,8 +71,13 @@ struct ServiceListRow: View {
 #Preview {
     ServiceListRow(
         service: Service(
-            companyName: "РЖД",
-            companyLogo: "RussianRailwaysLogo",
+            carrier: Carrier(
+                companyName: "РЖД",
+                companyLogo: "RussianRailwaysLogo",
+                companyLogoBig: "RussianRailwaysLogoBig",
+                email: "rzd@rzd.ru",
+                phoneNumber: "+81 312 333 111"
+            ),
             transferInfo: "Пересадка в Костроме",
             departureTime: ISO8601DateFormatter().date(from: "2025-01-14T22:30:00+03:00")!,
             arrivalTime: ISO8601DateFormatter().date(from: "2025-01-15T08:15:00+03:00")!

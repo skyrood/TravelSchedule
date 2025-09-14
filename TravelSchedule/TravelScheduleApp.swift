@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct TravelScheduleApp: App {
     @StateObject private var orientationObserver = OrientationObserver()
+    @StateObject private var colorSchemeManager = ColorSchemeManager()
     
     @State private var router = Router()
     @State private var builder = TripBuilder()
     @State private var viewModel = SettlementViewModel()
     @State private var servicesFilters = ServicesFiltersViewModel()
+    @State private var storiesViewModel = StoriesViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -23,16 +25,21 @@ struct TravelScheduleApp: App {
                     .navigationDestination(for: Route.self, destination: destination)
             }
             .environmentObject(orientationObserver)
+            .environmentObject(colorSchemeManager)
             .environment(router)
             .environment(builder)
             .environment(viewModel)
             .environment(servicesFilters)
+            .environment(storiesViewModel)
+            .preferredColorScheme(colorSchemeManager.currentColorScheme)
         }
     }
     
     @ViewBuilder
     private func destination(_ route: Route) -> some View {
         switch route {
+        case .mainScreen:
+            MainScreenView()
         case .settlement(let kind):
             SettlementSelectionView(kind: kind)
         case .station(let settlement, let kind):
@@ -41,8 +48,19 @@ struct TravelScheduleApp: App {
             ServiceListView()
         case .filters:
             ServiceFiltersView()
-        case .carrierInfo:
-            CarrierInfoView()
+        case .carrierInfo(let carrier):
+            CarrierInfoView(carrier: carrier)
+        case .settings(let subroute):
+            switch subroute {
+            case .connectionError:
+                ConnectionErrorView()
+            case .serverError:
+                ServerErrorView()
+            case .userAgreement:
+                UserAgreementView()
+            }
+        case .stories(let index):
+            StoriesView(startIndex: index)
         }
     }
 }

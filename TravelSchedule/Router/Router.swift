@@ -8,52 +8,32 @@
 import SwiftUI
 
 @Observable
-final class Router {
-    var schedulePath = NavigationPath()
-    var settingsPath = NavigationPath()
+final class Router: ObservableObject {
+    var path = NavigationPath()
     
     func pathBinding() -> Binding<NavigationPath> {
         Binding(
-            get: { self.schedulePath },
-            set: { self.schedulePath = $0 }
-        )
-    }
-    
-    func settingsPathBinding() -> Binding<NavigationPath> {
-        Binding(
-            get: { self.settingsPath },
-            set: { self.settingsPath = $0 }
+            get: { self.path },
+            set: { self.path = $0 }
         )
     }
     
     func go(to route: Route) {
-        schedulePath.append(route)
+        path.append(route)
     }
-    
+
     func pop(_ count: Int = 1) {
-        for _ in 0..<count where !schedulePath.isEmpty { schedulePath.removeLast() }
-    }
-    
-    func popToRoot() {
-        schedulePath = NavigationPath()
-    }
-    
-    func go(to route: SettingsRoute) {
-        settingsPath.append(route)
-    }
-    
-    func popSettings(_ count: Int = 1) {
-        for _ in 0..<count where !settingsPath.isEmpty { settingsPath.removeLast() }
-    }
-    
-    func popToRootSettings() {
-        settingsPath = NavigationPath()
-    }
-    
-    func setPath(_ routes: [Route]) {
-        schedulePath = NavigationPath()
-        routes.forEach {
-            schedulePath.append($0)
+        for _ in 0..<count where !path.isEmpty {
+            path.removeLast()
         }
+    }
+
+    func popToRoot() {
+        path = NavigationPath()
+    }
+
+    func setPath(_ routes: [Route]) {
+        path = NavigationPath()
+        routes.forEach { path.append($0) }
     }
 }
