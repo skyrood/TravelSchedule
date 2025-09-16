@@ -15,7 +15,7 @@ struct TravelScheduleApp: App {
     @State private var router = Router()
     @State private var builder = TripBuilder()
     @State private var viewModel = SettlementViewModel()
-    @State private var servicesFilters = ServicesFiltersViewModel()
+    @State private var servicesFilters = ServicesFilters()
     @State private var storiesViewModel = StoriesViewModel()
     
     var body: some Scene {

@@ -1,5 +1,5 @@
 //
-//  ServicesFiltersViewModel.swift
+//  ServicesFilters.swift
 //  TravelSchedule
 //
 //  Created by Rodion Kim on 2025/08/21.
@@ -33,7 +33,7 @@ enum TransfersOption: String, CaseIterable, Identifiable {
 }
 
 @Observable
-final class ServicesFiltersViewModel {
+final class ServicesFilters {
     var selectedTimes: Set<DepartureTime> = []
     var transfers: TransfersOption = .yes
     

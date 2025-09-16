@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ServiceFiltersView: View {
-    @Environment(ServicesFiltersViewModel.self) private var filters
+    @Environment(ServicesFilters.self) private var filters
     @Environment(Router.self) private var router
     @Environment(\.dismiss) private var dismiss
     
@@ -113,6 +113,6 @@ struct ServiceFiltersView: View {
 
 #Preview {
     ServiceFiltersView()
-        .environment(ServicesFiltersViewModel())
+        .environment(ServicesFilters())
         .environment(Router())
 }

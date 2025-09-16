@@ -11,7 +11,7 @@ struct ServiceListView: View {
     @State private var viewModel = ServiceListViewModel()
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
-    @Environment(ServicesFiltersViewModel.self) private var filters
+    @Environment(ServicesFilters.self) private var filters
     @Environment(\.dismiss) private var dismiss
     
     private var filteredServices: [Service] {
@@ -84,5 +84,5 @@ struct ServiceListView: View {
     ServiceListView()
         .environment(Router())
         .environment(TripBuilder())
-        .environment(ServicesFiltersViewModel())
+        .environment(ServicesFilters())
 }
