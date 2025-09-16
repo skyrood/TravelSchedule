@@ -90,5 +90,5 @@ struct StationSelectionView: View {
     )
     .environment(Router())
     .environment(TripBuilder())
-    .environment(SettlementViewModel())
+//    .environment(SettlementViewModel())
 }

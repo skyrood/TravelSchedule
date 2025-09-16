@@ -10,7 +10,8 @@ import SwiftUI
 struct MainScreenView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
-    @Environment(StoriesViewModel.self) private var storiesViewModel
+    @State var storiesViewModel: StoriesViewModel = StoriesViewModel()
+//    @Environment(StoriesViewModel.self) private var storiesViewModel
     
     @EnvironmentObject private var orientationObserver: OrientationObserver
     
@@ -163,5 +164,5 @@ struct MainScreenView: View {
         .environmentObject(OrientationObserver())
         .environment(Router())
         .environment(TripBuilder())
-        .environment(StoriesViewModel())
+//        .environment(StoriesViewModel())
 }

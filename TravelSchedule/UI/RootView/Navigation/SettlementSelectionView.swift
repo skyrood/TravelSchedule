@@ -10,8 +10,8 @@ import SwiftUI
 struct SettlementSelectionView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
-    @Environment(SettlementViewModel.self) private var viewModel
     
+    @State var viewModel: SettlementViewModel = SettlementViewModel()
     @State private var query: String = ""
 
     let kind: SelectionKind
@@ -84,5 +84,5 @@ struct SettlementSelectionView: View {
     )
     .environment(Router())
     .environment(TripBuilder())
-    .environment(SettlementViewModel())
+//    .environment(SettlementViewModel())
 }
