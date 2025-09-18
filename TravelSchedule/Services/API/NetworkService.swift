@@ -1,5 +1,5 @@
 //
-//  API.swift
+//  NetworkService.swift
 //  TravelSchedule
 //
 //  Created by Rodion Kim on 2025/08/03.
@@ -26,8 +26,8 @@ struct AuthenticationClientMiddleware: ClientMiddleware {
     }
 }
 
-final class API {
-    static let shared = API()
+final class NetworkService {
+    static let shared = NetworkService()
     
     let client: Client
     let apiKey: String = "86ce946c-528d-4cf4-9dc0-7030969c85eb"
@@ -43,7 +43,7 @@ final class API {
     }
 }
 
-extension API {
+extension NetworkService {
     func getServicesBetweenStations(
         from: String,
         to: String,
