@@ -84,5 +84,4 @@ struct SettlementSelectionView: View {
     )
     .environment(Router())
     .environment(TripBuilder())
-//    .environment(SettlementViewModel())
 }

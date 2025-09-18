@@ -164,5 +164,4 @@ struct MainScreenView: View {
         .environmentObject(OrientationObserver())
         .environment(Router())
         .environment(TripBuilder())
-//        .environment(StoriesViewModel())
 }
