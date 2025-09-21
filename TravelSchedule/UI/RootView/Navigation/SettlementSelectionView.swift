@@ -7,11 +7,19 @@
 
 import SwiftUI
 
+extension Settlement: Identifiable {
+    var id: String {
+        codes?.yandex_code ?? (title ?? "unknown-\(UUID().uuidString)")
+    }
+}
+
 struct SettlementSelectionView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
     
-    @State var viewModel: SettlementViewModel = SettlementViewModel()
+//    @State var viewModel: SettlementViewModel = SettlementViewModel()
+    @Environment(SettlementViewModel.self) var viewModel
+
     @State private var query: String = ""
 
     let kind: SelectionKind
@@ -20,11 +28,20 @@ struct SettlementSelectionView: View {
         self.kind = kind
     }
     
+//    private var filteredSettlements: [Settlement] {
+//        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+//        guard !q.isEmpty else { return viewModel.settlements }
+//        return viewModel.settlements.filter { s in
+//            s.title.localizedCaseInsensitiveContains(q)
+//        }
+//    }
+  
     private var filteredSettlements: [Settlement] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else { return viewModel.settlements }
-        return viewModel.settlements.filter { s in
-            s.name.localizedCaseInsensitiveContains(q)
+        
+        return viewModel.settlements.filter { settlement in
+            settlement.title?.localizedCaseInsensitiveContains(q) == true
         }
     }
     

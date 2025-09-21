@@ -32,6 +32,9 @@ struct TravelScheduleApp: App {
             .environment(servicesFilters)
             .environment(storiesViewModel)
             .preferredColorScheme(colorSchemeManager.currentColorScheme)
+            .task {
+                await viewModel.loadSettlements()
+            }
         }
     }
     

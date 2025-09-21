@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Settlement: Identifiable, Hashable {
+struct Settlement1: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var stations: [Station]

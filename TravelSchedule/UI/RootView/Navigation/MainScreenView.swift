@@ -10,7 +10,8 @@ import SwiftUI
 struct MainScreenView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
-    @State var storiesViewModel: StoriesViewModel = StoriesViewModel()
+//    @State var storiesViewModel: StoriesViewModel = StoriesViewModel()
+    @Environment(StoriesViewModel.self) var storiesViewModel
 //    @Environment(StoriesViewModel.self) private var storiesViewModel
     
     @EnvironmentObject private var orientationObserver: OrientationObserver
@@ -24,18 +25,18 @@ struct MainScreenView: View {
     }
     
     private var fromTitle: String {
-        if let settlement = builder.from.settlement,
-           let station = builder.from.station {
-            return "\(settlement.name) (\(station.name))"
+        if let settlementTitle = builder.from.settlement?.title,
+           let stationTitle = builder.from.station?.title {
+            return "\(settlementTitle) (\(stationTitle))"
         } else {
             return "Откуда"
         }
     }
     
     private var toTitle: String {
-        if let settlement = builder.to.settlement,
-           let station = builder.to.station {
-            return "\(settlement.name) (\(station.name))"
+        if let settlementTitle = builder.to.settlement?.title,
+           let stationTitle = builder.to.station?.title {
+            return "\(settlementTitle) (\(stationTitle))"
         } else {
             return "Куда"
         }
