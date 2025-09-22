@@ -24,12 +24,6 @@ struct StationSelectionView: View {
         self.kind = kind
     }
     
-//    private var filteredStations: [Station] {
-//        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-//        guard !q.isEmpty else { return settlement.stations ?? [] }
-//        return settlement.stations?.filter { $0.title.localizedCaseInsensitiveContains(q) } ?? <#default value#>
-//    }
-    
     private var filteredStations: [Station] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else {
