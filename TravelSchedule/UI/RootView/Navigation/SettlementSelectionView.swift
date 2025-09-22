@@ -17,25 +17,17 @@ struct SettlementSelectionView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
     
-//    @State var viewModel: SettlementViewModel = SettlementViewModel()
     @Environment(SettlementViewModel.self) var viewModel
-
+    
     @State private var query: String = ""
-
+    @FocusState private var isSearchFocused: Bool
+    
     let kind: SelectionKind
-
+    
     init(kind: SelectionKind) {
         self.kind = kind
     }
     
-//    private var filteredSettlements: [Settlement] {
-//        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-//        guard !q.isEmpty else { return viewModel.settlements }
-//        return viewModel.settlements.filter { s in
-//            s.title.localizedCaseInsensitiveContains(q)
-//        }
-//    }
-  
     private var filteredSettlements: [Settlement] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else { return viewModel.settlements }
@@ -57,11 +49,53 @@ struct SettlementSelectionView: View {
         }
         .navigationTitle("Выбор города")
         .navigationBarBackButtonHidden(true)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
         .toolbar {
             Toolbar()
         }
-        .toolbarBackground(.ypWhite, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .safeAreaInset(edge: .top) { // workaround to counter the bug with navigation stack breaking when used with .searchable
+            searchField
+                .padding(.horizontal)
+                .padding(.vertical, 0)
+                .background(Color.ypWhite)
+        }
+    }
+    
+    var searchField: some View {
+        VStack {
+            HStack(spacing: 4) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.searchElements)
+                
+                ZStack(alignment: .leading) {
+                    if query.isEmpty {
+                        Text("Введите запрос")
+                            .foregroundColor(Color(.searchElements))
+                    }
+
+                    TextField("", text: $query)
+                        .foregroundColor(Color(.label))
+                        .focused($isSearchFocused)
+                }
+                
+                if !query.isEmpty {
+                    Button {
+                        query = ""
+                        isSearchFocused = false
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.searchElements)
+                    }
+                }
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 7)
+            .background(.searchFieldBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Color.ypWhite
+                .frame(height: 8)
+        }
     }
     
     var noResults: some View {
@@ -89,7 +123,7 @@ struct SettlementSelectionView: View {
             }
         }
         .listStyle(.plain)
-        .background(.ypWhite)
+        .padding(.top, -8)
         .padding(.leading, 16)
         .padding(.trailing, 18)
     }
