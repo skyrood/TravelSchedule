@@ -12,10 +12,13 @@ struct ServiceListView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
     @Environment(ServicesFilters.self) private var filters
-    @Environment(\.dismiss) private var dismiss
     
-    private var filteredServices: [Service] {
+    private var filteredServices: [Segment] {
         viewModel.services.filter { filters.matches($0) }
+    }
+    
+    private enum Constants {
+        static let bottomPadding: CGFloat = 92
     }
     
     var body: some View {
@@ -32,32 +35,82 @@ struct ServiceListView: View {
             Toolbar()
         }
         .toolbarBackground(.ypWhite, for: .navigationBar)
+        .task {
+            await viewModel.loadServices(
+                from: builder.from.station,
+                to: builder.to.station
+            )
+        }
     }
     
     var serviceList: some View {
-        ScrollView {
-            Text(builder.routeDescription())
-                .padding(.top, 16)
-                .font(.bold24)
-                .foregroundColor(.ypBlack)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        ZStack {
+            Color.ypWhite.ignoresSafeArea()
             
-            LazyVStack {
-                if filteredServices.isEmpty {
-                    Text("Вариантов нет")
-                        .font(.bold24)
-                } else {
-                    ForEach(filteredServices) { service in
-                        Button {
-                            router.go(to: .carrierInfo(carrier: service.carrier))
-                        } label: {
-                            ServiceListRow(service: service)
+            VStack {
+                switch viewModel.state {
+                case .loading:
+                    tripInfo
+                    LoadingProgressView()
+                        .padding(.bottom, Constants.bottomPadding)
+                case .success:
+                    if filteredServices.isEmpty {
+                        VStack {
+                            tripInfo
+                            noResults
+                                .padding(.bottom, Constants.bottomPadding)
+                            Spacer()
                         }
+                    } else {
+                        ScrollView {
+                            VStack {
+                                tripInfo
+                                servicesList
+                            }
+                            .padding(.bottom, Constants.bottomPadding)
+                        }
+                        .scrollContentBackground(.hidden)
                     }
+                    
+                case .idle, .failure:
+                    EmptyView()
                 }
             }
-            
-            Color.clear.frame(height: 84)
+        }
+    }
+    
+    var tripInfo: some View {
+        Text(builder.routeDescription())
+            .padding(.top, 16)
+            .font(.bold24)
+            .foregroundColor(.ypBlack)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    var noResults: some View {
+        VStack {
+            Spacer()
+            Text("Вариантов нет")
+                .font(.bold24)
+                .foregroundColor(.ypBlack)
+            Spacer()
+        }
+    }
+    
+    var servicesList: some View {
+        LazyVStack {
+            ForEach(filteredServices, id: \.self) { service in
+                if let carrier = service.thread?.carrier {
+                    Button {
+                        router.go(to: .carrierInfo(carrier: carrier))
+                    } label: {
+                        ServiceListRow(service: service)
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    ServiceListRow(service: service)
+                }
+            }
         }
     }
     
@@ -79,10 +132,10 @@ struct ServiceListView: View {
         }
     }
 }
-
-#Preview {
-    ServiceListView()
-        .environment(Router())
-        .environment(TripBuilder())
-        .environment(ServicesFilters())
-}
+//
+//#Preview {
+//    ServiceListView(viewModel: ServiceListViewModel())
+//        .environment(Router())
+//        .environment(TripBuilder())
+//        .environment(ServicesFilters())
+//}

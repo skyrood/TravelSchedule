@@ -8,34 +8,53 @@
 import SwiftUI
 
 struct ServiceListRow: View {
-    let service: Service
+    let service: Segment
     
     var body: some View {
         ZStack {
             VStack {
                 HStack(alignment: .top) {
                     HStack {
-                        Image(service.carrier.companyLogo)
-                            .resizable()
-                            .frame(width: 38, height: 38)
-                            .clipped()
-                            .cornerRadius(12)
-                            
+                        if let logoURL = service.thread?.carrier?.logo,
+                           let url = URL(string: logoURL) {
+                            AsyncImage(url: url) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 38, height: 38)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            } placeholder: {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(.ypGray)
+                                    .frame(width: 38, height: 38)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color.ypGray.opacity(0.2))
+                                    )
+                            }
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.ypGray)
+                                .frame(width: 38, height: 38)
+                        }
+                        
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(service.carrier.companyName)
+                            Text(service.thread?.carrier?.title ?? "Без названия")
                                 .lineLimit(1)
                                 .font(.regular17)
                                 .foregroundColor(.ypBlackUniv)
-                            Text(service.transferInfo ?? "")
+                            Text(service.has_transfers == true ? "С пересадками" : " ")
                                 .lineLimit(1)
                                 .font(.regular12)
-                                .foregroundColor(.ypRed)
+                                .foregroundColor(service.has_transfers == true ? .ypRed : .clear)
                         }
                     }
                     
                     Spacer()
                     
-                    Text(service.departureDate)
+                    Text(service.formattedStartDate)
                         .font(.regular12)
                         .foregroundColor(.ypBlackUniv)
                 }
@@ -43,7 +62,7 @@ struct ServiceListRow: View {
                 Spacer()
                 
                 HStack(spacing: 5) {
-                    Text(service.departureHHmm)
+                    Text(service.departureTimeText)
                         .font(.regular17)
                         .foregroundColor(.ypBlackUniv)
                     Rectangle()
@@ -55,7 +74,7 @@ struct ServiceListRow: View {
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.ypGray)
-                    Text(service.arrivalHHmm)
+                    Text(service.arrivalTimeText)
                         .font(.regular17)
                         .foregroundColor(.ypBlackUniv)
                 }
@@ -68,19 +87,19 @@ struct ServiceListRow: View {
     }
 }
 
-#Preview {
-    ServiceListRow(
-        service: Service(
-            carrier: Carrier(
-                companyName: "РЖД",
-                companyLogo: "RussianRailwaysLogo",
-                companyLogoBig: "RussianRailwaysLogoBig",
-                email: "rzd@rzd.ru",
-                phoneNumber: "+81 312 333 111"
-            ),
-            transferInfo: "Пересадка в Костроме",
-            departureTime: ISO8601DateFormatter().date(from: "2025-01-14T22:30:00+03:00")!,
-            arrivalTime: ISO8601DateFormatter().date(from: "2025-01-15T08:15:00+03:00")!
-        )
-    )
-}
+//#Preview {
+//    ServiceListRow(
+//        service: Service(
+//            carrier: Carrier(
+//                companyName: "РЖД",
+//                companyLogo: "RussianRailwaysLogo",
+//                companyLogoBig: "RussianRailwaysLogoBig",
+//                email: "rzd@rzd.ru",
+//                phoneNumber: "+81 312 333 111"
+//            ),
+//            transferInfo: "Пересадка в Костроме",
+//            departureTime: ISO8601DateFormatter().date(from: "2025-01-14T22:30:00+03:00")!,
+//            arrivalTime: ISO8601DateFormatter().date(from: "2025-01-15T08:15:00+03:00")!
+//        )
+//    )
+//}
