@@ -27,6 +27,7 @@ final class SettlementViewModel {
         do {
             let response = try await networkService.getAllStations()
             settlements = response.countries?
+                .filter { $0.title == "Россия" } // filtering by country name to reduce amount of data
                 .flatMap { $0.regions ?? [] }
                 .flatMap { $0.settlements ?? [] }
                 .filter {
@@ -38,6 +39,7 @@ final class SettlementViewModel {
         } catch is URLError {
             state = .failure(.network)
         } catch {
+            print(error)
             state = .failure(.server)
         }
     }
