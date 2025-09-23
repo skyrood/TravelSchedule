@@ -57,7 +57,7 @@ extension NetworkService {
         limit: Int? = nil,
         addDaysMask: Bool? = nil,
         resultTimeZone: String? = nil,
-        transfers: Bool? = nil
+        transfers: Bool? = true
     ) async throws -> ServicesBetweenStations {
         let service = SearchService(client: client)
         return try await service.getServicesBetweenStations(
