@@ -70,7 +70,6 @@ struct StationSelectionView: View {
         List {
             ForEach(filteredStations, id: \.self) { station in
                 Button {
-                    print("selected: \(station.title ?? "")")
                     builder.setStation(station: station, for: kind)
                     router.pop(2)
                 } label: {
