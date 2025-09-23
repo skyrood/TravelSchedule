@@ -26,6 +26,7 @@ final class SettlementViewModel {
         state = .loading
         do {
             let response = try await networkService.getAllStations()
+            
             settlements = response.countries?
                 .flatMap { $0.regions ?? [] }
                 .flatMap { $0.settlements ?? [] }
@@ -34,7 +35,6 @@ final class SettlementViewModel {
                     return !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 } ?? []
             
-            throw URLError(.notConnectedToInternet)
             state = .success(settlements)
         } catch is URLError {
             state = .failure(.network)
