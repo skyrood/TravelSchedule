@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 @Observable
 final class Router: ObservableObject {
     var globalPath = NavigationPath()

@@ -26,7 +26,7 @@ struct AuthenticationClientMiddleware: ClientMiddleware {
     }
 }
 
-final class NetworkService {
+actor NetworkService {
     static let shared = NetworkService()
     
     let client: Client
