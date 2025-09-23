@@ -52,15 +52,15 @@ struct PlaceSelection: Equatable {
     
     func routeDescription() -> String {
         guard
-            let fromSettlement = from.settlement,
-            let fromStation = from.station,
-            let toSettlement = to.settlement,
-            let toStation = to.station
+            let fromSettlement = from.settlement?.title,
+            let fromStation = from.station?.title,
+            let toSettlement = to.settlement?.title,
+            let toStation = to.station?.title
         else {
             return "Маршрут не выбран"
         }
         
-        return "\(fromSettlement.title) (\(fromStation.title)) → \(toSettlement.title) (\(toStation.title))"
+        return "\(fromSettlement) (\(fromStation)) → \(toSettlement) (\(toStation))"
     }
 }
 
