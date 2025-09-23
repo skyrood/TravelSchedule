@@ -43,9 +43,8 @@ struct SettlementSelectionView: View {
             
             switch viewModel.state {
             case .loading:
-                ProgressView("Загрузка…")
-                    .progressViewStyle(CircularProgressViewStyle())
-            case .success(let settlements):
+                LoadingProgressView()
+            case .success(_):
                 if filteredSettlements.isEmpty {
                     noResults
                 } else {
