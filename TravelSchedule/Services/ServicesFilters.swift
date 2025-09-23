@@ -45,17 +45,17 @@ final class ServicesFilters {
         }
     }
     
-    func matches(_ service: Service, calendar: Calendar = .current) -> Bool {
+    func matches(_ service: Segment, calendar: Calendar = .current) -> Bool {
         let okByTime: Bool = {
             guard !selectedTimes.isEmpty else { return true }
-            let hour = calendar.component(.hour, from: service.departureTime)
+            guard let hour = service.departureHour else { return false }
             return selectedTimes.contains { $0.contains(hour: hour) }
         }()
         
         let okByTransfers: Bool = {
             switch transfers {
             case .yes: return true
-            case .no:  return !service.hasTransfers
+            case .no:  return !(service.has_transfers ?? false)
             }
         }()
         
