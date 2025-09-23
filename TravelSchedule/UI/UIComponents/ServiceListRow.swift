@@ -86,20 +86,3 @@ struct ServiceListRow: View {
         .background(RoundedRectangle(cornerRadius: 20).fill(.ypLightgray))
     }
 }
-
-//#Preview {
-//    ServiceListRow(
-//        service: Service(
-//            carrier: Carrier(
-//                companyName: "РЖД",
-//                companyLogo: "RussianRailwaysLogo",
-//                companyLogoBig: "RussianRailwaysLogoBig",
-//                email: "rzd@rzd.ru",
-//                phoneNumber: "+81 312 333 111"
-//            ),
-//            transferInfo: "Пересадка в Костроме",
-//            departureTime: ISO8601DateFormatter().date(from: "2025-01-14T22:30:00+03:00")!,
-//            arrivalTime: ISO8601DateFormatter().date(from: "2025-01-15T08:15:00+03:00")!
-//        )
-//    )
-//}

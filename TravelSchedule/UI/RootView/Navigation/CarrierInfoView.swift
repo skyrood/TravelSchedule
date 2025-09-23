@@ -117,12 +117,11 @@ struct CarrierInfoView: View {
     }
 }
 
-//#Preview {
-//    CarrierInfoView(carrier: Carrier(
-//        companyName: "ОАО «РЖД»",
-//        companyLogo: "RussianRailwaysLogo",
-//        companyLogoBig: "RussianRailwaysLogoBig",
-//        email: "support@rzd.ru",
-//        phoneNumber: "+7 (800) 775-00-00"
-//    ))
-//}
+#Preview {
+    CarrierInfoView(carrier: Carrier(
+        title: "ОАО «РЖД»",
+        phone: "+7 (800) 775-00-00",
+        logo: "RussianRailwaysLogo",
+        email: "support@rzd.ru"
+    ))
+}

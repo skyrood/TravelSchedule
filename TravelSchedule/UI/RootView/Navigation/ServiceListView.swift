@@ -132,10 +132,10 @@ struct ServiceListView: View {
         }
     }
 }
-//
-//#Preview {
-//    ServiceListView(viewModel: ServiceListViewModel())
-//        .environment(Router())
-//        .environment(TripBuilder())
-//        .environment(ServicesFilters())
-//}
+
+#Preview {
+    ServiceListView()
+        .environment(Router())
+        .environment(TripBuilder())
+        .environment(ServicesFilters())
+}
