@@ -26,6 +26,7 @@ struct ServerErrorView: View {
                 Spacer()
             }
         }
+        .toolbar(.hidden)
     }
 }
 

@@ -26,6 +26,7 @@ struct ConnectionErrorView: View {
                 Spacer()
             }
         }
+        .toolbar(.hidden)
     }
 }
 

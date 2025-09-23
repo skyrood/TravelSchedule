@@ -41,10 +41,18 @@ struct SettlementSelectionView: View {
         ZStack {
             Color.ypWhite.ignoresSafeArea()
             
-            if filteredSettlements.isEmpty {
-                noResults
-            } else {
-                settlementList
+            switch viewModel.state {
+            case .loading:
+                ProgressView("Загрузка…")
+                    .progressViewStyle(CircularProgressViewStyle())
+            case .success(let settlements):
+                if filteredSettlements.isEmpty {
+                    noResults
+                } else {
+                    settlementList
+                }
+            case .idle, .failure:
+                EmptyView()
             }
         }
         .navigationTitle("Выбор города")
@@ -72,7 +80,7 @@ struct SettlementSelectionView: View {
                         Text("Введите запрос")
                             .foregroundColor(Color(.searchElements))
                     }
-
+                    
                     TextField("", text: $query)
                         .foregroundColor(Color(.label))
                         .focused($isSearchFocused)

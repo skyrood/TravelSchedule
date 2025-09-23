@@ -20,50 +20,30 @@ struct TravelScheduleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: router.pathBinding()) {
-                RootView()
-                    .navigationDestination(for: Route.self, destination: destination)
-            }
-            .environmentObject(orientationObserver)
-            .environmentObject(colorSchemeManager)
-            .environment(router)
-            .environment(builder)
-            .environment(viewModel)
-            .environment(servicesFilters)
-            .environment(storiesViewModel)
-            .preferredColorScheme(colorSchemeManager.currentColorScheme)
-            .task {
-                await viewModel.loadSettlements()
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func destination(_ route: Route) -> some View {
-        switch route {
-        case .mainScreen:
-            MainScreenView()
-        case .settlement(let kind):
-            SettlementSelectionView(kind: kind)
-        case .station(let settlement, let kind):
-            StationSelectionView(settlement: settlement, kind: kind)
-        case .serviceList:
-            ServiceListView()
-        case .filters:
-            ServiceFiltersView()
-        case .carrierInfo(let carrier):
-            CarrierInfoView(carrier: carrier)
-        case .settings(let subroute):
-            switch subroute {
-            case .connectionError:
-                ConnectionErrorView()
-            case .serverError:
-                ServerErrorView()
-            case .userAgreement:
-                UserAgreementView()
-            }
-        case .stories(let index):
-            StoriesView(startIndex: index)
+            RootView()
+                .environmentObject(orientationObserver)
+                .environmentObject(colorSchemeManager)
+                .environment(router)
+                .environment(builder)
+                .environment(viewModel)
+                .environment(servicesFilters)
+                .environment(storiesViewModel)
+                .preferredColorScheme(colorSchemeManager.currentColorScheme)
+                .task {
+                    await viewModel.loadSettlements()
+                }
+                .onChange(of: viewModel.state) { _, newValue in
+                    switch newValue {
+                    case .failure(.network):
+                        router.popToRoot()
+                        router.go(to: SettingsRoute.connectionError)
+                    case .failure(.server):
+                        router.popToRoot()
+                        router.go(to: SettingsRoute.serverError)
+                    default:
+                        break
+                    }
+                }
         }
     }
 }

@@ -10,5 +10,5 @@ import Foundation
 enum SettingsRoute: Hashable {
     case connectionError
     case serverError
-    case userAgreement
+//    case userAgreement
 }

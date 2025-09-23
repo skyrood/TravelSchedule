@@ -14,9 +14,8 @@ typealias Station = Components.Schemas.Station
 @Observable
 final class SettlementViewModel {
     private var networkService: NetworkService
-    var isLoadingData = true
-    var loadError: Error?
     
+    var state: LoadState = .idle
     var settlements: [Settlement] = []
     
     init() {
@@ -24,8 +23,8 @@ final class SettlementViewModel {
     }
     
     func loadSettlements() async {
+        state = .loading
         do {
-            print("start loading")
             let response = try await networkService.getAllStations()
             settlements = response.countries?
                 .flatMap { $0.regions ?? [] }
@@ -35,13 +34,12 @@ final class SettlementViewModel {
                     return !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 } ?? []
             
-            print("settlements count: \(settlements.count)")
-            
-            print("loading complete")
-            isLoadingData = false
+            throw URLError(.notConnectedToInternet)
+            state = .success(settlements)
+        } catch is URLError {
+            state = .failure(.network)
         } catch {
-            loadError = error
-            isLoadingData = false
+            state = .failure(.server)
         }
     }
 }
