@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+extension Carrier {
+    var emailText: String {
+        if let email = email, !email.isEmpty {
+            return email
+        } else {
+            return "email отсутствует"
+        }
+    }
+    
+    var phoneText: String {
+        if let phone = phone, !phone.isEmpty {
+            return phone
+        } else {
+            return "Номер телефона отсутствует"
+        }
+    }
+}
+
 struct CarrierInfoView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -39,17 +57,26 @@ struct CarrierInfoView: View {
             RoundedRectangle(cornerRadius: 24)
                 .fill(Color.ypWhiteUniv)
             
-            
-            Image(carrier.companyLogoBig)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
+            if let logoURL = carrier.logo,
+               let url = URL(string: logoURL) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 104)
+                        .padding(.horizontal, 16)
+                } placeholder: {
+                    placeholderImage
+                }
+            } else {
+                placeholderImage
+            }
         }
         .frame(height: 104)
     }
     
     var carrierName: some View {
-        Text(carrier.companyName)
+        Text(carrier.title ?? "-")
             .font(.bold24)
     }
     
@@ -59,8 +86,8 @@ struct CarrierInfoView: View {
                 Text("E-mail")
                     .font(.regular17)
                 
-                Link(destination: URL(string: "mailto:\(carrier.email)")!) {
-                    Text(carrier.email)
+                Link(destination: URL(string: "mailto:\(String(describing: carrier.email))")!) {
+                    Text(carrier.emailText)
                         .font(.regular12)
                         .foregroundColor(.ypBlue)
                 }
@@ -71,8 +98,8 @@ struct CarrierInfoView: View {
                 Text("Телефон")
                     .font(.regular17)
                 
-                Link(destination: URL(string: "tel:\(carrier.phoneNumber)")!) {
-                    Text(carrier.phoneNumber)
+                Link(destination: URL(string: "tel:\(String(describing: carrier.phone))")!) {
+                    Text(carrier.phoneText)
                         .font(.regular12)
                         .foregroundColor(.ypBlue)
                 }
@@ -80,14 +107,22 @@ struct CarrierInfoView: View {
             .frame(height: 60)
         }
     }
+    
+    private var placeholderImage: some View {
+        Image(systemName: "xmark")
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(.ypGray)
+            .frame(width: 48, height: 48)
+    }
 }
 
-#Preview {
-    CarrierInfoView(carrier: Carrier(
-        companyName: "ОАО «РЖД»",
-        companyLogo: "RussianRailwaysLogo",
-        companyLogoBig: "RussianRailwaysLogoBig",
-        email: "support@rzd.ru",
-        phoneNumber: "+7 (800) 775-00-00"
-    ))
-}
+//#Preview {
+//    CarrierInfoView(carrier: Carrier(
+//        companyName: "ОАО «РЖД»",
+//        companyLogo: "RussianRailwaysLogo",
+//        companyLogoBig: "RussianRailwaysLogoBig",
+//        email: "support@rzd.ru",
+//        phoneNumber: "+7 (800) 775-00-00"
+//    ))
+//}
