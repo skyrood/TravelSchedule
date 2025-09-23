@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum LoadState: Equatable {
+enum LoadState<T>: Equatable where T: Equatable {
     case idle
     case loading
-    case success([Settlement])
+    case success(T)
     case failure(ErrorType)
 }
 

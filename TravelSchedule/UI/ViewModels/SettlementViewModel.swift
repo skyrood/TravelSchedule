@@ -15,7 +15,7 @@ typealias Station = Components.Schemas.Station
 final class SettlementViewModel {
     private var networkService: NetworkService
     
-    var state: LoadState = .idle
+    var state: LoadState<[Settlement]> = .idle
     var settlements: [Settlement] = []
     
     init() {
@@ -26,7 +26,6 @@ final class SettlementViewModel {
         state = .loading
         do {
             let response = try await networkService.getAllStations()
-            
             settlements = response.countries?
                 .flatMap { $0.regions ?? [] }
                 .flatMap { $0.settlements ?? [] }
