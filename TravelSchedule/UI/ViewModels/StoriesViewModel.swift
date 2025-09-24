@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 @Observable
 final class StoriesViewModel {
     var stories: [Story] = []

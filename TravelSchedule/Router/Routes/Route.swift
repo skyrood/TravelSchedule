@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GlobalRoute: Hashable {
+enum GlobalRoute: Hashable, Sendable {
     case settlement(kind: SelectionKind)
     case station(settlement: Settlement, kind: SelectionKind)
     case serviceList
@@ -15,5 +15,4 @@ enum GlobalRoute: Hashable {
     case carrierInfo(carrier: Carrier)
     case stories(index: Int = 0)
     case userAgreement
-
 }

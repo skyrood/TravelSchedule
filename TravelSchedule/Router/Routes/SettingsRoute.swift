@@ -7,8 +7,7 @@
 
 import Foundation
 
-enum SettingsRoute: Hashable {
+enum SettingsRoute: Hashable, Sendable {
     case connectionError
     case serverError
-//    case userAgreement
 }
