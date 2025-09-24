@@ -39,6 +39,7 @@ struct TravelScheduleApp: App {
                         router.go(to: SettingsRoute.connectionError)
                     case .failure(.server):
                         router.popToRoot()
+
                         router.go(to: SettingsRoute.serverError)
                     default:
                         break

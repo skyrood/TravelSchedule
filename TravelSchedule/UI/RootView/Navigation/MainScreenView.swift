@@ -134,7 +134,7 @@ struct MainScreenView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 16)
-                            .foregroundColor(.ypBlue)
+                            .foregroundStyle(.ypBlue)
                     }
                 }
                 .padding(.trailing, 16)
@@ -151,7 +151,7 @@ struct MainScreenView: View {
         } label: {
             Text("Найти")
                 .font(.bold17)
-                .foregroundColor(.ypWhiteUniv)
+                .foregroundStyle(.ypWhiteUniv)
                 .frame(width: 150, height: 60)
                 .contentShape(Rectangle())
         }

@@ -83,7 +83,7 @@ struct ServiceListView: View {
         Text(builder.routeDescription())
             .padding(.top, 16)
             .font(.bold24)
-            .foregroundColor(.ypBlack)
+            .foregroundStyle(.ypBlack)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
@@ -92,7 +92,7 @@ struct ServiceListView: View {
             Spacer()
             Text("Вариантов нет")
                 .font(.bold24)
-                .foregroundColor(.ypBlack)
+                .foregroundStyle(.ypBlack)
             Spacer()
         }
     }
@@ -123,7 +123,7 @@ struct ServiceListView: View {
             } label: {
                 Text("Уточнить время")
                     .font(.bold17)
-                    .foregroundColor(.ypWhiteUniv)
+                    .foregroundStyle(.ypWhiteUniv)
                     .frame(maxWidth: .infinity, minHeight: 60)
                     .contentShape(Rectangle())
             }

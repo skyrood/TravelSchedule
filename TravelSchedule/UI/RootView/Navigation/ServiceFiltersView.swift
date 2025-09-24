@@ -61,7 +61,7 @@ struct ServiceFiltersView: View {
                 }
             }
         }
-        .foregroundColor(.ypBlack)
+        .foregroundStyle(.ypBlack)
         .font(.bold24)
     }
     
@@ -88,7 +88,7 @@ struct ServiceFiltersView: View {
                 }
             }
         }
-        .foregroundColor(.ypBlack)
+        .foregroundStyle(.ypBlack)
         .font(.bold24)
     }
     
@@ -101,7 +101,7 @@ struct ServiceFiltersView: View {
             } label: {
                 Text("Применить")
                     .font(.bold17)
-                    .foregroundColor(.ypWhiteUniv)
+                    .foregroundStyle(.ypWhiteUniv)
                     .frame(maxWidth: .infinity, minHeight: 60)
                     .contentShape(Rectangle())
             }

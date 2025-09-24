@@ -15,7 +15,7 @@ struct RouteInputField: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .foregroundColor(isFilled ? .ypBlackUniv : .ypGray)
+                .foregroundStyle(isFilled ? .ypBlackUniv : .ypGray)
                 .font(.regular17)
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)

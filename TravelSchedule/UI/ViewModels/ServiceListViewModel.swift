@@ -34,11 +34,7 @@ extension Segment {
         let hours = duration / 3600
         let minutes = (duration % 3600) / 60
         
-        if hours > 0 {
-            return "\(hours) ч \(minutes) мин"
-        } else {
-            return "\(minutes) мин"
-        }
+        return hours > 0 ? "\(hours) ч \(minutes) мин" : "\(minutes) мин"
     }
     
     var departureHour: Int? {

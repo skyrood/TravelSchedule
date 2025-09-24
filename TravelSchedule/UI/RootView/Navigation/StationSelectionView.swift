@@ -61,7 +61,7 @@ struct StationSelectionView: View {
             Spacer()
             Text("Станция не найдена")
                 .font(.bold24)
-                .foregroundColor(.ypBlack)
+                .foregroundStyle(.ypBlack)
             Spacer()
         }
     }

@@ -89,7 +89,7 @@ struct CarrierInfoView: View {
                 Link(destination: URL(string: "mailto:\(String(describing: carrier.email))")!) {
                     Text(carrier.emailText)
                         .font(.regular12)
-                        .foregroundColor(.ypBlue)
+                        .foregroundStyle(.ypBlue)
                 }
             }
             .frame(height: 60)
@@ -101,7 +101,7 @@ struct CarrierInfoView: View {
                 Link(destination: URL(string: "tel:\(String(describing: carrier.phone))")!) {
                     Text(carrier.phoneText)
                         .font(.regular12)
-                        .foregroundColor(.ypBlue)
+                        .foregroundStyle(.ypBlue)
                 }
             }
             .frame(height: 60)
@@ -112,7 +112,7 @@ struct CarrierInfoView: View {
         Image(systemName: "xmark")
             .resizable()
             .scaledToFit()
-            .foregroundColor(.ypGray)
+            .foregroundStyle(.ypGray)
             .frame(width: 48, height: 48)
     }
 }

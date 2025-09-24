@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct LoadingProgressView: View {
+struct LoadingProgressView: View {
     public var body: some View {
         Spacer()
         ProgressView("Загрузка…")

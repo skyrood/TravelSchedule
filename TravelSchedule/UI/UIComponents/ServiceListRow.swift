@@ -27,7 +27,7 @@ struct ServiceListRow: View {
                                 Image(systemName: "xmark")
                                     .resizable()
                                     .scaledToFit()
-                                    .foregroundColor(.ypGray)
+                                    .foregroundStyle(.ypGray)
                                     .frame(width: 38, height: 38)
                                     .background(
                                         RoundedRectangle(cornerRadius: 12)
@@ -44,11 +44,11 @@ struct ServiceListRow: View {
                             Text(service.thread?.carrier?.title ?? "Без названия")
                                 .lineLimit(1)
                                 .font(.regular17)
-                                .foregroundColor(.ypBlackUniv)
+                                .foregroundStyle(.ypBlackUniv)
                             Text(service.has_transfers == true ? "С пересадками" : " ")
                                 .lineLimit(1)
                                 .font(.regular12)
-                                .foregroundColor(service.has_transfers == true ? .ypRed : .clear)
+                                .foregroundStyle(service.has_transfers == true ? .ypRed : .clear)
                         }
                     }
                     
@@ -56,7 +56,7 @@ struct ServiceListRow: View {
                     
                     Text(service.formattedStartDate)
                         .font(.regular12)
-                        .foregroundColor(.ypBlackUniv)
+                        .foregroundStyle(.ypBlackUniv)
                 }
                 
                 Spacer()
@@ -64,19 +64,19 @@ struct ServiceListRow: View {
                 HStack(spacing: 5) {
                     Text(service.departureTimeText)
                         .font(.regular17)
-                        .foregroundColor(.ypBlackUniv)
+                        .foregroundStyle(.ypBlackUniv)
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.ypGray)
+                        .foregroundStyle(.ypGray)
                     Text(service.durationText)
                         .font(.regular12)
-                        .foregroundColor(.ypBlackUniv)
+                        .foregroundStyle(.ypBlackUniv)
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.ypGray)
+                        .foregroundStyle(.ypGray)
                     Text(service.arrivalTimeText)
                         .font(.regular17)
-                        .foregroundColor(.ypBlackUniv)
+                        .foregroundStyle(.ypBlackUniv)
                 }
             }
             .padding(14)

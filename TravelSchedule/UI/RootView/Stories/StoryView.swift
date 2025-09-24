@@ -41,12 +41,12 @@ struct StoryView: View {
             
             Text(story.title)
                 .font(.bold34)
-                .foregroundColor(.ypWhiteUniv)
+                .foregroundStyle(.ypWhiteUniv)
                 .lineLimit(2)
             
             Text(story.description)
                 .font(.regular20)
-                .foregroundColor(.ypWhiteUniv)
+                .foregroundStyle(.ypWhiteUniv)
                 .lineLimit(3)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

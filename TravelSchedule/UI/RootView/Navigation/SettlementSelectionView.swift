@@ -72,16 +72,15 @@ struct SettlementSelectionView: View {
         VStack {
             HStack(spacing: 4) {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.searchElements)
+                    .foregroundStyle(.searchElements)
                 
                 ZStack(alignment: .leading) {
-                    if query.isEmpty {
-                        Text("Введите запрос")
-                            .foregroundColor(Color(.searchElements))
-                    }
+                    Text("Введите запрос")
+                        .foregroundStyle(Color(.searchElements))
+                        .opacity(query.isEmpty ? 1 : 0)
                     
                     TextField("", text: $query)
-                        .foregroundColor(Color(.label))
+                        .foregroundStyle(Color(.label))
                         .focused($isSearchFocused)
                 }
                 
@@ -91,7 +90,7 @@ struct SettlementSelectionView: View {
                         isSearchFocused = false
                     } label: {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.searchElements)
+                            .foregroundStyle(.searchElements)
                     }
                 }
             }
@@ -110,7 +109,7 @@ struct SettlementSelectionView: View {
             Spacer()
             Text("Город не найден")
                 .font(.bold24)
-                .foregroundColor(.ypBlack)
+                .foregroundStyle(.ypBlack)
             Spacer()
         }
     }

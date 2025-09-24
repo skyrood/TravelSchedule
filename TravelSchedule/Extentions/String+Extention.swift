@@ -15,7 +15,7 @@ extension String {
     }
     
     var hourComponent: Int? {
-        let parts = self.split(separator: ":")
+        let parts = split(separator: ":")
         if let hourString = parts.first, let hour = Int(hourString) {
             return hour
         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserAgreementView: View {
-    @State var viewModel: UserAgreementViewModel = UserAgreementViewModel()
+    @State private var viewModel: UserAgreementViewModel = UserAgreementViewModel()
     
     var body: some View {
         ZStack {

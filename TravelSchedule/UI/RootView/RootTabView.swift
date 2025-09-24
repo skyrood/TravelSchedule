@@ -46,8 +46,8 @@ struct RootTabView: View {
             }
             .opacity(router.globalPath.isEmpty ? 0 : 1)
         }
-        .onChange(of: router.activeTab) { _, newValue in
-            if let newValue { selectedTab = newValue }
+        .onChange(of: router.tab) { _, newValue in
+            if let newValue { router.tab = newValue }
         }
         .onChange(of: selectedTab) { _, newValue in
             if newValue == 0 {

@@ -9,10 +9,15 @@ import SwiftUI
 
 @MainActor
 @Observable
-final class Router: ObservableObject {
+final class Router {
+    enum activeTab {
+        case main
+        case settings
+    }
+    
     var globalPath = NavigationPath()
     var settingsPath = NavigationPath()
-    var activeTab: Int? = nil
+    var tab: activeTab?
     
     func globalPathBinding() -> Binding<NavigationPath> {
         Binding(
@@ -48,7 +53,7 @@ final class Router: ObservableObject {
     }
     
     func go(to route: SettingsRoute) {
-        activeTab = 1
+        tab = .settings
         settingsPath.append(route)
     }
 

@@ -84,6 +84,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
-        .environmentObject(Router())
+        .environment(Router())
         .environmentObject(ColorSchemeManager())
 }
