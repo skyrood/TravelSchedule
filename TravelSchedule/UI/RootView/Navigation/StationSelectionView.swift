@@ -26,8 +26,13 @@ struct StationSelectionView: View {
     
     private var filteredStations: [Station] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !q.isEmpty else { return settlement.stations }
-        return settlement.stations.filter { $0.name.localizedCaseInsensitiveContains(q) }
+        guard !q.isEmpty else {
+            return settlement.stations ?? []
+        }
+
+        return settlement.stations?.filter {
+            $0.title?.localizedCaseInsensitiveContains(q) == true
+        } ?? []
     }
     
     var body: some View {
@@ -56,16 +61,15 @@ struct StationSelectionView: View {
             Spacer()
             Text("Станция не найдена")
                 .font(.bold24)
-                .foregroundColor(.ypBlack)
+                .foregroundStyle(.ypBlack)
             Spacer()
         }
     }
     
     var stationList: some View {
         List {
-            ForEach(filteredStations) { station in
+            ForEach(filteredStations, id: \.self) { station in
                 Button {
-                    print("selected \(station.name)")
                     builder.setStation(station: station, for: kind)
                     router.pop(2)
                 } label: {
@@ -85,10 +89,9 @@ struct StationSelectionView: View {
 
 #Preview {
     StationSelectionView(
-        settlement: Settlement(name: "Омск", stations: [Station(name: "Омск"), Station(name: "Не Омск")]),
+        settlement: Settlement(title: "Омск", stations: [Station(title: "Омск"), Station(title: "Не Омск")]),
         kind: .from
     )
     .environment(Router())
     .environment(TripBuilder())
-    .environment(SettlementViewModel())
 }

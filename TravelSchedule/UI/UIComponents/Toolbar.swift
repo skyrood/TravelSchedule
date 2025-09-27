@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct Toolbar: ToolbarContent {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Router.self) private var router
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             Button {
-                dismiss()
+                router.pop()
             } label: {
                 Image(systemName: "chevron.left")
                     .tint(.ypBlack)

@@ -1,5 +1,5 @@
 //
-//  ServicesFiltersViewModel.swift
+//  ServicesFilters.swift
 //  TravelSchedule
 //
 //  Created by Rodion Kim on 2025/08/21.
@@ -33,7 +33,7 @@ enum TransfersOption: String, CaseIterable, Identifiable {
 }
 
 @Observable
-final class ServicesFiltersViewModel {
+final class ServicesFilters {
     var selectedTimes: Set<DepartureTime> = []
     var transfers: TransfersOption = .yes
     
@@ -45,17 +45,17 @@ final class ServicesFiltersViewModel {
         }
     }
     
-    func matches(_ service: Service, calendar: Calendar = .current) -> Bool {
+    func matches(_ service: Segment, calendar: Calendar = .current) -> Bool {
         let okByTime: Bool = {
             guard !selectedTimes.isEmpty else { return true }
-            let hour = calendar.component(.hour, from: service.departureTime)
+            guard let hour = service.departureHour else { return false }
             return selectedTimes.contains { $0.contains(hour: hour) }
         }()
         
         let okByTransfers: Bool = {
             switch transfers {
             case .yes: return true
-            case .no:  return !service.hasTransfers
+            case .no:  return !(service.has_transfers ?? false)
             }
         }()
         

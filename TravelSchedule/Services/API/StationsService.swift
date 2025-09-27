@@ -42,10 +42,7 @@ final class StationsService: StationsServiceProtocol {
         print("Collected data of size: \(fullData.count) bytes")
 
         let allStations = try JSONDecoder().decode(StationList.self, from: fullData)
-        
-        
 
-        
         return allStations
     }
 }

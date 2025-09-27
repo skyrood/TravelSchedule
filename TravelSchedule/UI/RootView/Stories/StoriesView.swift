@@ -106,7 +106,7 @@ struct StoriesView: View {
         }
         .frame(width: 30, height: 30)
         .padding(.top, 57)
-        .padding(.trailing, 12)
+        .padding(.trailing, 15)
     }
     
     private func nextStory(jumpToNext: Bool = false) {

@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 final class OrientationObserver: ObservableObject {
     @Published var isLandscape: Bool = UIDevice.current.orientation.isLandscape
 

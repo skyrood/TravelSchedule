@@ -7,15 +7,23 @@
 
 import SwiftUI
 
+extension Settlement: Identifiable {
+    var id: String {
+        codes?.yandex_code ?? (title ?? "unknown-\(UUID().uuidString)")
+    }
+}
+
 struct SettlementSelectionView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
-    @Environment(SettlementViewModel.self) private var viewModel
+    
+    @Environment(SettlementViewModel.self) var viewModel
     
     @State private var query: String = ""
-
+    @FocusState private var isSearchFocused: Bool
+    
     let kind: SelectionKind
-
+    
     init(kind: SelectionKind) {
         self.kind = kind
     }
@@ -23,8 +31,9 @@ struct SettlementSelectionView: View {
     private var filteredSettlements: [Settlement] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else { return viewModel.settlements }
-        return viewModel.settlements.filter { s in
-            s.name.localizedCaseInsensitiveContains(q)
+        
+        return viewModel.settlements.filter { settlement in
+            settlement.title?.localizedCaseInsensitiveContains(q) == true
         }
     }
     
@@ -32,19 +41,67 @@ struct SettlementSelectionView: View {
         ZStack {
             Color.ypWhite.ignoresSafeArea()
             
-            if filteredSettlements.isEmpty {
-                noResults
-            } else {
-                settlementList
+            switch viewModel.state {
+            case .loading:
+                LoadingProgressView()
+            case .success(_):
+                if filteredSettlements.isEmpty {
+                    noResults
+                } else {
+                    settlementList
+                }
+            case .idle, .failure:
+                EmptyView()
             }
         }
         .navigationTitle("Выбор города")
         .navigationBarBackButtonHidden(true)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Введите запрос")
         .toolbar {
             Toolbar()
         }
-        .toolbarBackground(.ypWhite, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .safeAreaInset(edge: .top) { // workaround to counter the bug with navigation stack breaking when used with .searchable
+            searchField
+                .padding(.horizontal)
+                .padding(.vertical, 0)
+                .background(Color.ypWhite)
+        }
+    }
+    
+    var searchField: some View {
+        VStack {
+            HStack(spacing: 4) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.searchElements)
+                
+                ZStack(alignment: .leading) {
+                    Text("Введите запрос")
+                        .foregroundStyle(Color(.searchElements))
+                        .opacity(query.isEmpty ? 1 : 0)
+                    
+                    TextField("", text: $query)
+                        .foregroundStyle(Color(.label))
+                        .focused($isSearchFocused)
+                }
+                
+                if !query.isEmpty {
+                    Button {
+                        query = ""
+                        isSearchFocused = false
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.searchElements)
+                    }
+                }
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 7)
+            .background(.searchFieldBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Color.ypWhite
+                .frame(height: 8)
+        }
     }
     
     var noResults: some View {
@@ -52,7 +109,7 @@ struct SettlementSelectionView: View {
             Spacer()
             Text("Город не найден")
                 .font(.bold24)
-                .foregroundColor(.ypBlack)
+                .foregroundStyle(.ypBlack)
             Spacer()
         }
     }
@@ -72,7 +129,7 @@ struct SettlementSelectionView: View {
             }
         }
         .listStyle(.plain)
-        .background(.ypWhite)
+        .padding(.top, -8)
         .padding(.leading, 16)
         .padding(.trailing, 18)
     }
@@ -84,5 +141,4 @@ struct SettlementSelectionView: View {
     )
     .environment(Router())
     .environment(TripBuilder())
-    .environment(SettlementViewModel())
 }

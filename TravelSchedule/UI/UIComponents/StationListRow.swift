@@ -14,7 +14,7 @@ struct StationListRow: View {
     
     var body: some View {
         HStack {
-            Text(station.name)
+            Text(station.title ?? "-")
                 .font(.regular17)
             Spacer()
         }
@@ -25,5 +25,5 @@ struct StationListRow: View {
 }
 
 #Preview {
-    StationListRow(station: Station(name: "Москва-товарная"))
+    StationListRow(station: Station(title: "Москва-товарная"))
 }

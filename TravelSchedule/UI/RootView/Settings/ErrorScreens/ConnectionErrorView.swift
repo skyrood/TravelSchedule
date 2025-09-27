@@ -21,11 +21,12 @@ struct ConnectionErrorView: View {
                     .scaledToFit()
                 Text("Нет интернета")
                     .font(.bold24)
-                    .foregroundColor(.ypBlack)
+                    .foregroundStyle(.ypBlack)
                     .padding(.top, 16)
                 Spacer()
             }
         }
+        .toolbar(.hidden)
     }
 }
 

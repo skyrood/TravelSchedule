@@ -10,7 +10,9 @@ import SwiftUI
 struct MainScreenView: View {
     @Environment(Router.self) private var router
     @Environment(TripBuilder.self) private var builder
-    @Environment(StoriesViewModel.self) private var storiesViewModel
+//    @State var storiesViewModel: StoriesViewModel = StoriesViewModel()
+    @Environment(StoriesViewModel.self) var storiesViewModel
+//    @Environment(StoriesViewModel.self) private var storiesViewModel
     
     @EnvironmentObject private var orientationObserver: OrientationObserver
     
@@ -23,18 +25,18 @@ struct MainScreenView: View {
     }
     
     private var fromTitle: String {
-        if let settlement = builder.from.settlement,
-           let station = builder.from.station {
-            return "\(settlement.name) (\(station.name))"
+        if let settlementTitle = builder.from.settlement?.title,
+           let stationTitle = builder.from.station?.title {
+            return "\(settlementTitle) (\(stationTitle))"
         } else {
             return "Откуда"
         }
     }
     
     private var toTitle: String {
-        if let settlement = builder.to.settlement,
-           let station = builder.to.station {
-            return "\(settlement.name) (\(station.name))"
+        if let settlementTitle = builder.to.settlement?.title,
+           let stationTitle = builder.to.station?.title {
+            return "\(settlementTitle) (\(stationTitle))"
         } else {
             return "Куда"
         }
@@ -132,7 +134,7 @@ struct MainScreenView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 16)
-                            .foregroundColor(.ypBlue)
+                            .foregroundStyle(.ypBlue)
                     }
                 }
                 .padding(.trailing, 16)
@@ -149,7 +151,7 @@ struct MainScreenView: View {
         } label: {
             Text("Найти")
                 .font(.bold17)
-                .foregroundColor(.ypWhiteUniv)
+                .foregroundStyle(.ypWhiteUniv)
                 .frame(width: 150, height: 60)
                 .contentShape(Rectangle())
         }
@@ -163,5 +165,4 @@ struct MainScreenView: View {
         .environmentObject(OrientationObserver())
         .environment(Router())
         .environment(TripBuilder())
-        .environment(StoriesViewModel())
 }

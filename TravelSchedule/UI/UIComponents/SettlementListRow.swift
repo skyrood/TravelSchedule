@@ -14,7 +14,7 @@ struct SettlementListRow: View {
     
     var body: some View {
         HStack {
-            Text(settlement.name)
+            Text(settlement.title ?? "-")
                 .font(.regular17)
             Spacer()
             Image(systemName: "chevron.right")
@@ -26,5 +26,5 @@ struct SettlementListRow: View {
 }
 
 #Preview {
-    SettlementListRow(settlement: Settlement(name: "Москва", stations: [Station(name: "Москва-товарная")]))
+    SettlementListRow(settlement: Settlement(title: "Москва", stations: [Station(title: "Москва-товарная")]))
 }

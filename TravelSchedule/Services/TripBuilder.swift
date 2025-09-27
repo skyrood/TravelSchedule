@@ -21,12 +21,12 @@ struct PlaceSelection: Equatable {
     func setSettlement(settlement: Settlement, for kind: SelectionKind) {
         switch kind {
         case .from:
-            if from.settlement?.id != settlement.id {
+            if from.settlement?.codes?.yandex_code != settlement.codes?.yandex_code {
                 from.settlement = settlement
                 from.station = nil
             }
         case .to:
-            if to.settlement?.id != settlement.id {
+            if to.settlement?.codes?.yandex_code != settlement.codes?.yandex_code {
                 to.settlement = settlement
                 to.station = nil
             }
@@ -52,15 +52,15 @@ struct PlaceSelection: Equatable {
     
     func routeDescription() -> String {
         guard
-            let fromSettlement = from.settlement,
-            let fromStation = from.station,
-            let toSettlement = to.settlement,
-            let toStation = to.station
+            let fromSettlement = from.settlement?.title,
+            let fromStation = from.station?.title,
+            let toSettlement = to.settlement?.title,
+            let toStation = to.station?.title
         else {
             return "Маршрут не выбран"
         }
         
-        return "\(fromSettlement.name) (\(fromStation.name)) → \(toSettlement.name) (\(toStation.name))"
+        return "\(fromSettlement) (\(fromStation)) → \(toSettlement) (\(toStation))"
     }
 }
 

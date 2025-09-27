@@ -49,7 +49,7 @@ struct SettingsView: View {
     
     var userAgreementButton: some View {
         Button {
-            router.go(to: .settings(.userAgreement))
+            router.go(to: .userAgreement)
         } label: {
             HStack {
                 Text("Пользовательское соглашение")
@@ -84,6 +84,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
-        .environmentObject(Router())
+        .environment(Router())
         .environmentObject(ColorSchemeManager())
 }

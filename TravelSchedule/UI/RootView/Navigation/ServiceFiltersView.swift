@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ServiceFiltersView: View {
-    @Environment(ServicesFiltersViewModel.self) private var filters
+    @Environment(ServicesFilters.self) private var filters
     @Environment(Router.self) private var router
     @Environment(\.dismiss) private var dismiss
     
@@ -61,7 +61,7 @@ struct ServiceFiltersView: View {
                 }
             }
         }
-        .foregroundColor(.ypBlack)
+        .foregroundStyle(.ypBlack)
         .font(.bold24)
     }
     
@@ -88,7 +88,7 @@ struct ServiceFiltersView: View {
                 }
             }
         }
-        .foregroundColor(.ypBlack)
+        .foregroundStyle(.ypBlack)
         .font(.bold24)
     }
     
@@ -101,7 +101,7 @@ struct ServiceFiltersView: View {
             } label: {
                 Text("Применить")
                     .font(.bold17)
-                    .foregroundColor(.ypWhiteUniv)
+                    .foregroundStyle(.ypWhiteUniv)
                     .frame(maxWidth: .infinity, minHeight: 60)
                     .contentShape(Rectangle())
             }
@@ -113,6 +113,6 @@ struct ServiceFiltersView: View {
 
 #Preview {
     ServiceFiltersView()
-        .environment(ServicesFiltersViewModel())
+        .environment(ServicesFilters())
         .environment(Router())
 }

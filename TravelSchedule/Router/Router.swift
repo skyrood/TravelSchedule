@@ -7,33 +7,68 @@
 
 import SwiftUI
 
+@MainActor
 @Observable
-final class Router: ObservableObject {
-    var path = NavigationPath()
+final class Router {
+    enum activeTab {
+        case main
+        case settings
+    }
     
-    func pathBinding() -> Binding<NavigationPath> {
+    var globalPath = NavigationPath()
+    var settingsPath = NavigationPath()
+    var tab: activeTab?
+    
+    func globalPathBinding() -> Binding<NavigationPath> {
         Binding(
-            get: { self.path },
-            set: { self.path = $0 }
+            get: { self.globalPath },
+            set: { self.globalPath = $0 }
         )
     }
     
-    func go(to route: Route) {
-        path.append(route)
+    func settingsPathBinding() -> Binding<NavigationPath> {
+        Binding(
+            get: { self.settingsPath },
+            set: { self.settingsPath = $0 }
+        )
+    }
+    
+    func go(to route: GlobalRoute) {
+        globalPath.append(route)
     }
 
     func pop(_ count: Int = 1) {
-        for _ in 0..<count where !path.isEmpty {
-            path.removeLast()
+        for _ in 0..<count where !globalPath.isEmpty {
+            globalPath.removeLast()
         }
     }
 
     func popToRoot() {
-        path = NavigationPath()
+        globalPath = NavigationPath()
     }
 
-    func setPath(_ routes: [Route]) {
-        path = NavigationPath()
-        routes.forEach { path.append($0) }
+    func setPath(_ routes: [GlobalRoute]) {
+        globalPath = NavigationPath()
+        routes.forEach { globalPath.append($0) }
+    }
+    
+    func go(to route: SettingsRoute) {
+        tab = .settings
+        settingsPath.append(route)
+    }
+
+    func popSettings(_ count: Int = 1) {
+        for _ in 0..<count where !settingsPath.isEmpty {
+            settingsPath.removeLast()
+        }
+    }
+
+    func popToSettingsRoot() {
+        settingsPath = NavigationPath()
+    }
+
+    func setPath(_ routes: [SettingsRoute]) {
+        settingsPath = NavigationPath()
+        routes.forEach { settingsPath.append($0) }
     }
 }

@@ -32,7 +32,7 @@ struct StoryPreview: View {
                 .lineLimit(3)
                 .truncationMode(.tail)
                 .font(.regular12)
-                .foregroundColor(.ypWhiteUniv)
+                .foregroundStyle(.ypWhiteUniv)
             
         }
         .frame(width: 92, height: 140)

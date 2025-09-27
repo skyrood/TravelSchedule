@@ -21,11 +21,12 @@ struct ServerErrorView: View {
                     .scaledToFit()
                 Text("Ошибка сервера")
                     .font(.bold24)
-                    .foregroundColor(.ypBlack)
+                    .foregroundStyle(.ypBlack)
                     .padding(.top, 16)
                 Spacer()
             }
         }
+        .toolbar(.hidden)
     }
 }
 
